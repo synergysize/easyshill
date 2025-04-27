@@ -410,18 +410,11 @@
               <textarea id="shill-message" placeholder="Enter your shill here..."></textarea>
             </div>
             
-            <div class="link-inputs">
-              <div class="input-row">
-                <label>Chart Link:</label>
-                <input type="text" id="chart-link" placeholder="Enter chart URL" class="link-field">
-              </div>
-              <div class="input-row">
-                <label>Website Link:</label>
-                <input type="text" id="website-link" placeholder="Enter website URL" class="link-field">
-              </div>
-              <div class="input-row">
-                <label>X Link:</label>
-                <input type="text" id="x-link" placeholder="Enter X URL" class="link-field">
+            <div class="button-row">
+              <div class="button-group">
+                <button class="capsule-button">Insert Chart</button>
+                <button class="capsule-button">Insert Website</button>
+                <button class="capsule-button">Insert X</button>
               </div>
               
               <div class="emoji-list">
@@ -744,114 +737,6 @@
     #bottom-sheet.receded #toggle-icon {
       transform: rotate(180deg);
     }
-    
-    /* Modal Dialog Styles */
-    .modal {
-      display: none; /* Will be changed to block when needed */
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.7);
-    }
-    
-    .modal-content {
-      background-color: #1a1a1a;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #444;
-      width: 80%;
-      max-width: 500px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,255,0,0.2);
-      color: #fff;
-      font-family: 'Orbitron', sans-serif;
-    }
-    
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    
-    .close:hover,
-    .close:focus {
-      color: #0f0;
-      text-decoration: none;
-    }
-    
-    #link-input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #444;
-      background-color: #2a2a2a;
-      color: #fff;
-      border-radius: 5px;
-      font-family: 'Orbitron', sans-serif;
-    }
-    
-    #save-link {
-      background-color: #2a2a2a;
-      color: #0f0;
-      border: 1px solid #0f0;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-family: 'Orbitron', sans-serif;
-      transition: all 0.3s;
-    }
-    
-    #save-link:hover {
-      background-color: #0f0;
-      color: #000;
-    }
-    
-    /* Emoji selection styles */
-    .emoji.selected {
-      background-color: rgba(0, 255, 0, 0.3);
-      border-radius: 50%;
-      transform: scale(1.2);
-    }
-    
-    /* Link input styles */
-    .link-inputs {
-      margin-top: 10px;
-    }
-    
-    .input-row {
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-    }
-    
-    .input-row label {
-      color: #0f0;
-      width: 100px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 12px;
-    }
-    
-    .link-field {
-      flex: 1;
-      padding: 5px;
-      border: 1px solid #444;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      border-radius: 5px;
-      font-family: 'Orbitron', sans-serif;
-    }
-    
-    .link-field:focus {
-      border-color: #0f0;
-      outline: none;
-      box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
-    }
 
     /* Indicator Lights */
     #indicator-lights {
@@ -915,139 +800,188 @@
       window.addEventListener('resize', function() {
         bottomSheet.style.height = '160px';
       });
-    });
-  </script>
-  
-  <!-- Hidden input field to store selected emojis -->
-  <input type="hidden" id="selected-emojis" value="">
-  
-  <script>
-    // Link insertion and social media update functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      // Elements
-      const shillMessage = document.getElementById('shill-message');
-      const updateButton = document.getElementById('update-button');
-      const chartLinkInput = document.getElementById('chart-link');
-      const websiteLinkInput = document.getElementById('website-link');
-      const xLinkInput = document.getElementById('x-link');
-      const selectedEmojisInput = document.getElementById('selected-emojis');
-      const redLight = document.getElementById('red-light-copy');
-      const greenLight = document.getElementById('green-light-copy');
-      const emojis = document.querySelectorAll('.emoji');
       
-      // Emoji selection
-      emojis.forEach(emoji => {
-        emoji.addEventListener('click', function() {
-          const selectedEmoji = emoji.textContent;
-          let currentEmojis = selectedEmojisInput.value;
-          
-          // Toggle emoji (add if not present, remove if already present)
-          if (currentEmojis.includes(selectedEmoji)) {
-            selectedEmojisInput.value = currentEmojis.replace(selectedEmoji, '');
-            emoji.classList.remove('selected');
-          } else {
-            selectedEmojisInput.value = currentEmojis + selectedEmoji;
-            emoji.classList.add('selected');
+      // Variables to track which links are inserted
+      let hasChart = false;
+      let hasWebsite = false;
+      let hasX = false;
+      
+      // Handle capsule buttons (Insert Chart, Insert Website, Insert X)
+      const capsuleButtons = document.querySelectorAll('.capsule-button');
+      capsuleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const buttonText = this.textContent.trim();
+          if (buttonText === 'Insert Chart') {
+            hasChart = true;
+          } else if (buttonText === 'Insert Website') {
+            hasWebsite = true;
+          } else if (buttonText === 'Insert X') {
+            hasX = true;
           }
+          // Visual feedback for the button click
+          this.style.backgroundColor = '#e0e0e0';
+          setTimeout(() => {
+            this.style.backgroundColor = '';
+          }, 200);
         });
       });
       
-      // Update Links Button Functionality
+      // Handle emoji clicks
+      const emojis = document.querySelectorAll('.emoji');
+      emojis.forEach(emoji => {
+        emoji.addEventListener('click', function() {
+          const shillMessage = document.getElementById('shill-message');
+          shillMessage.value += ' ' + this.textContent;
+        });
+      });
+      
+      // Handle "Update Links" button click
+      const updateButton = document.getElementById('update-button');
       updateButton.addEventListener('click', function() {
-        // Collect input data
-        const messageText = shillMessage.value.trim();
-        const emojis = selectedEmojisInput.value;
-        const chartLink = chartLinkInput.value;
-        const websiteLink = websiteLinkInput.value;
-        const xLink = xLinkInput.value;
+        updateAllLinks();
+      });
+      
+      // Function to update all social media links
+      function updateAllLinks() {
+        // Get the message from the textarea
+        const inputMessage = document.getElementById('shill-message').value.trim();
         
-        // Build complete message
-        let completeMessage = messageText;
-        if (emojis) completeMessage += ' ' + emojis;
-        if (chartLink) completeMessage += ' ' + chartLink;
-        if (websiteLink) completeMessage += ' ' + websiteLink;
-        if (xLink) completeMessage += ' ' + xLink;
+        // Build the full message with optional links
+        let fullMessage = inputMessage;
         
-        // URL encode the message for the social media links
-        const encodedMessage = encodeURIComponent(completeMessage);
+        // Add selected emojis
+        const selectedEmojis = Array.from(document.querySelectorAll('.emoji'))
+          .map(emoji => emoji.textContent)
+          .join(' ');
         
-        // Update all the social media links
-        updateSocialMediaLinks(encodedMessage);
+        if (selectedEmojis) {
+          fullMessage += ' ' + selectedEmojis;
+        }
         
-        // Visual feedback - flash green light
+        // Add inserted links if selected
+        if (hasChart) {
+          fullMessage += ' https://dexscreener.com/';
+        }
+        
+        if (hasWebsite) {
+          fullMessage += ' https://easyshill.com/';
+        }
+        
+        if (hasX) {
+          fullMessage += ' https://x.com/easy_shill';
+        }
+        
+        // URL encode the message for use in links
+        const encodedMessage = encodeURIComponent(fullMessage);
+        
+        // Update all social media links in the image map
+        const mapAreas = document.querySelectorAll('map[name="ring-map"] area');
+        
+        mapAreas.forEach(area => {
+          const type = area.getAttribute('alt');
+          let newHref = '';
+          
+          // Update each link based on its social media type
+          switch(type) {
+            case 'pocket':
+              newHref = `https://getpocket.com/edit?url=https%3A//easyshill.com/%23how-to-buy&title=${encodedMessage}`;
+              break;
+            case 'pinterest':
+              newHref = `https://pinterest.com/pin/create/button/?url=https%3A//easyshill.com/%23how-to-buy&description=${encodedMessage}`;
+              break;
+            case 'xing':
+              newHref = `https://www.xing.com/spi/shares/new?url=https%3A//easyshill.com/%23how-to-buy&text=${encodedMessage}`;
+              break;
+            case 'messenger':
+            case 'messenger2':
+              newHref = `https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&app_id=123456789&redirect_uri=https%3A//easyshill.com/%23how-to-buy&text=${encodedMessage}`;
+              break;
+            case 'mastodon':
+              newHref = `https://mastodon.social/share?text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'whatsapp':
+              newHref = `https://api.whatsapp.com/send?text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'flipboard':
+              newHref = `https://share.flipboard.com/bookmarklet/popout?v=2&title=${encodedMessage}&url=https%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'linkedin':
+              newHref = `https://www.linkedin.com/sharing/share-offsite/?url=https%3A//easyshill.com/%23how-to-buy&summary=${encodedMessage}`;
+              break;
+            case 'sms':
+              newHref = `sms:?body=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'vk':
+              newHref = `https://vk.com/share.php?url=https%3A//easyshill.com/%23how-to-buy&title=${encodedMessage}`;
+              break;
+            case 'skype':
+              newHref = `https://web.skype.com/share?url=https%3A//easyshill.com/%23how-to-buy&text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'line':
+              newHref = `https://social-plugins.line.me/lineit/share?url=https%3A//easyshill.com/%23how-to-buy&text=${encodedMessage}`;
+              break;
+            case 'reddit':
+              newHref = `https://www.reddit.com/submit?url=https%3A//easyshill.com/%23how-to-buy&title=${encodedMessage}`;
+              break;
+            case 'gab':
+              newHref = `https://gab.com/compose?text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'twitter':
+              newHref = `https://twitter.com/intent/tweet?text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'email':
+              newHref = `mailto:?subject=${encodedMessage}&body=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'facebook':
+              newHref = `https://www.facebook.com/sharer/sharer.php?u=https%3A//easyshill.com/%23how-to-buy&quote=${encodedMessage}`;
+              break;
+            case 'tumblr':
+              newHref = `https://www.tumblr.com/widgets/share/tool?canonicalUrl=https%3A//easyshill.com/%23how-to-buy&caption=${encodedMessage}`;
+              break;
+            case 'hackernews':
+              newHref = `https://news.ycombinator.com/submitlink?u=https%3A//easyshill.com/%23how-to-buy&t=${encodedMessage}`;
+              break;
+            case 'tiktok':
+              newHref = `https://www.tiktok.com/upload?text=${encodedMessage}`;
+              break;
+            case 'weibo':
+              newHref = `https://service.weibo.com/share/share.php?url=https%3A//easyshill.com/%23how-to-buy&title=${encodedMessage}`;
+              break;
+            case 'custom':
+              newHref = `https%3A//easyshill.com/%23how-to-buy&text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            default:
+              // Keep the original href if type not recognized
+              newHref = area.getAttribute('href');
+          }
+          
+          // Update the href attribute
+          area.setAttribute('href', newHref);
+        });
+        
+        // Also update SVG links for consistency
+        const svgLinks = document.querySelectorAll('.links-layer svg a');
+        svgLinks.forEach(link => {
+          // Get the corresponding href from the map area with the same index
+          const index = Array.from(svgLinks).indexOf(link);
+          if (index < mapAreas.length) {
+            const newHref = mapAreas[index].getAttribute('href');
+            link.setAttribute('xlink:href', newHref);
+          }
+        });
+        
+        // Visual feedback: Flash green light
+        const redLight = document.getElementById('red-light-copy');
+        const greenLight = document.getElementById('green-light-copy');
+        
         redLight.classList.remove('active');
         greenLight.classList.add('active');
         
-        // Reset back to red light after 3 seconds
+        // Return to red after 3 seconds
         setTimeout(() => {
           greenLight.classList.remove('active');
           redLight.classList.add('active');
         }, 3000);
-      });
-      
-      // Function to update all social media links
-      function updateSocialMediaLinks(encodedMessage) {
-        // Update links in the image map
-        const areas = document.querySelectorAll('map[name="ring-map"] area');
-        areas.forEach(area => {
-          const alt = area.getAttribute('alt');
-          let href = area.getAttribute('href');
-          
-          // Update URL based on platform
-          switch(alt) {
-            case 'twitter':
-            case 'gab':
-            case 'mastodon':
-              href = href.replace(/text=([^&]*)/, `text=${encodedMessage}`);
-              break;
-              
-            case 'pocket':
-            case 'pinterest':
-            case 'reddit':
-            case 'tumblr':
-            case 'hackernews':
-            case 'weibo':
-              // These platforms typically have title and URL params
-              href = href.replace(/title=([^&]*)/, `title=${encodedMessage}`);
-              break;
-              
-            case 'whatsapp':
-            case 'messenger':
-            case 'messenger2':
-            case 'skype':
-            case 'sms':
-              // These platforms have only text param
-              href = href.replace(/text=([^&]*)/, `text=${encodedMessage}`);
-              break;
-              
-            case 'email':
-              // Email has subject and body
-              href = href.replace(/body=([^&]*)/, `body=${encodedMessage}`);
-              break;
-            
-            // Other cases as needed
-          }
-          
-          area.setAttribute('href', href);
-        });
-        
-        // Also update links in the SVG
-        const svgLinks = document.querySelectorAll('.links-layer svg a');
-        svgLinks.forEach(link => {
-          const href = link.getAttribute('xlink:href');
-          let updatedHref = href;
-          
-          // Update URL parameters similar to above logic
-          if (href.includes('text=')) {
-            updatedHref = href.replace(/text=([^&]*)/, `text=${encodedMessage}`);
-          } else if (href.includes('title=')) {
-            updatedHref = href.replace(/title=([^&]*)/, `title=${encodedMessage}`);
-          } else if (href.includes('body=')) {
-            updatedHref = href.replace(/body=([^&]*)/, `body=${encodedMessage}`);
-          }
-          
-          link.setAttribute('xlink:href', updatedHref);
-        });
       }
     });
   </script>
