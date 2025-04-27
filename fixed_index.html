@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Master Rings with 3D Background</title>
+  <style>
+    html, body { margin:0; padding:0; width:100%; height:auto; overflow:auto; background-color: #000; }
+    
+    /* Master Rings Layer */
+    .master-rings-layer {
+      position: relative;
+      width: 100%;
+      z-index: 10;
+      text-align: center;
+      padding-top: 20px;
+    }
+    
+    .master-rings-layer map {
+      display: inline-block;
+    }
+    
+    /* Make sure image map areas are clickable */
+    .master-rings-layer area {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    
+    /* Link Overlay Layer */
+    .links-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5; /* Lower z-index so the image map can work */
+    }
+    
+    /* Make all links/areas clickable */
+    .links-layer map area {
+      pointer-events: auto;
+    }
+
+    /* Orbital Dots Animation */
+    @keyframes fadeOut {
+      0% {
+        opacity: 0.6;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+    
+    /* Add cursor pointer to all clickable areas */
+    .links-layer svg a {
+      cursor: pointer;
+    }
+  </style>
+  <!-- jQuery and image map libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/image-map-resizer/1.0.10/js/imageMapResizer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/imagemapster/1.5.4/jquery.imagemapster.min.js"></script>
+  
+  <style>
+    img#master-rings {
+      max-width: 60%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Master Rings Layer -->
+  <div class="master-rings-layer">
+    <map name="ring-map">
+      <area alt="pocket" coords="1173,132,127" shape="circle" href="https://getpocket.com/edit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time" />
+      <area alt="pinterest" coords="636,140,116" shape="circle" href="https://pinterest.com/pin/create/button/?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;description=Easiest%20shill%20of%20all%20time" />
+      <area alt="xing" coords="289,437,109" shape="circle" href="https://www.xing.com/spi/shares/new?url=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="messenger" coords="153,886,111" shape="circle" href="https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&amp;amp;app_id=123456789&amp;amp;redirect_uri=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="mastodon" coords="318,1357,100" shape="circle" href="https://mastodon.social/share?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="whatsapp" coords="465,711,115" shape="circle" href="https://api.whatsapp.com/send?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="flipboard" coords="754,1140,76" shape="circle" href="https://share.flipboard.com/bookmarklet/popout?v=2&amp;amp;title=Easiest%20shill%20of%20all%20time&amp;amp;url=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="linkedin" coords="1076,1123,74" shape="circle" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="sms" coords="1189,898,57" shape="circle" href="sms:?body=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="vk" coords="1059,662,61" shape="circle" href="https://vk.com/share.php?url=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="skype" coords="614,896,64" shape="circle" href="https://web.skype.com/share?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="line" coords="743,659,54" shape="circle" href="https://social-plugins.line.me/lineit/share?url=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="reddit" coords="1327,1179,103" shape="circle" href="https://www.reddit.com/submit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time" />
+      <area alt="gab" coords="1396,755,98" shape="circle" href="https://gab.com/compose?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="twitter" coords="1569,405,89" shape="circle" href="https://twitter.com/intent/tweet?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="email" coords="1156,462,96" shape="circle" href="mailto:?subject=Easiest%20shill%20of%20all%20time&amp;amp;body=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="facebook" coords="725,431,119" shape="circle" href="https://www.facebook.com/sharer/sharer.php?u=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="custom" coords="687,1641,113" shape="circle" href="https%3A//easyshill.com/%23how-to-buy&amp;amp;text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="tumblr" coords="512,1155,120" shape="circle" href="https://www.tumblr.com/widgets/share/tool?canonicalUrl=https%3A//easyshill.com/%23how-to-buy&amp;amp;caption=Easiest%20shill%20of%20all%20time" />
+      <area alt="messenger2" coords="937,1409,105" shape="circle" href="https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&amp;amp;app_id=123456789&amp;amp;redirect_uri=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="hackernews" coords="1703,844,97" shape="circle" href="https://news.ycombinator.com/submitlink?u=https%3A//easyshill.com/%23how-to-buy&amp;amp;t=Easiest%20shill%20of%20all%20time" />
+      <area alt="tiktok" coords="1253,1610,99" shape="circle" href="https://www.tiktok.com/upload" />
+      <area alt="weibo" coords="1580,1321,126" shape="circle" href="https://service.weibo.com/share/share.php?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time" />
+    </map>
+  </div>
+  
+  <!-- Link Overlay Layer -->
+  <div class="links-layer" id="links-container">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1800 1800">
+  <image width="100%" height="100%" xlink:href="allrings.png" align="center"></image> <a xlink:href="https://getpocket.com/edit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time&quot; coords=&quot;1173,132,127&quot; shape=&quot;circle">
+    <rect x="1048" y="6" fill="#fff" opacity="0" width="248" height="252"></rect>
+  </a><a xlink:href="https://pinterest.com/pin/create/button/?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;description=Easiest%20shill%20of%20all%20time">
+    <rect x="520" y="26" fill="#fff" opacity="0" width="232" height="228"></rect>
+  </a><a xlink:href="https://www.xing.com/spi/shares/new?url=https%3A//easyshill.com/%23how-to-buy">
+    <rect x="180" y="320" fill="#fff" opacity="0" width="218" height="234"></rect>
+  </a><a xlink:href="https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&amp;amp;app_id=123456789&amp;amp;redirect_uri=https%3A//easyshill.com/%23how-to-buy">
+    <rect x="42" y="766" fill="#fff" opacity="0" width="222" height="240"></rect>
+  </a><a xlink:href="https://mastodon.social/share?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
+    <rect x="218" y="1254" fill="#fff" opacity="0" width="200" height="206"></rect>
+  </a><a xlink:href="https://api.whatsapp.com/send?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
+    <rect x="350" y="594" fill="#fff" opacity="0" width="230" height="234"></rect>
+  </a><a xlink:href="https://share.flipboard.com/bookmarklet/popout?v=2&amp;amp;title=Easiest%20shill%20of%20all%20time&amp;amp;url=https%3A//easyshill.com/%23how-to-buy">
+    <rect x="676" y="1064" fill="#fff" opacity="0" width="156" height="152"></rect>
+  </a><a xlink:href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//easyshill.com/%23how-to-buy">
+    <rect x="1002" y="1042" fill="#fff" opacity="0" width="148" height="162"></rect>
+  </a><a xlink:href="href=&quot;sms:?body=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
+    <rect x="1132" y="844" fill="#fff" opacity="0" width="114" height="108"></rect>
+  </a><a xlink:href="https://vk.com/share.php?url=https%3A//easyshill.com/%23how-to-buy">
+    <rect x="998" y="602" fill="#fff" opacity="0" width="122" height="120"></rect>
+  </a><a xlink:href="https://web.skype.com/share?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
+    <rect x="548" y="832" fill="#fff" opacity="0" width="132" height="128"></rect>
+  </a><a xlink:href="https://social-plugins.line.me/lineit/share?url=https%3A//easyshill.com/%23how-to-buy">
+    <rect x="689" y="605" fill="#fff" opacity="0" width="108" height="108"></rect>
+  </a><a xlink:href="https://www.reddit.com/submit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time">
+    <rect x="1218" y="1076" fill="#fff" opacity="0" width="218" height="206"></rect>
+  </a><a xlink:href="https://gab.com/compose?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
+    <rect x="1298" y="650" fill="#fff" opacity="0" width="196" height="210"></rect>
+  </a><a xlink:href="https://twitter.com/intent/tweet?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
+    <rect x="1480" y="308" fill="#fff" opacity="0" width="178" height="194"></rect>
+  </a><a xlink:href="mailto:?subject=Easiest%20shill%20of%20all%20time&amp;amp;body=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
+    <rect x="1052" y="366" fill="#fff" opacity="0" width="208" height="192"></rect>
+  </a><a xlink:href="https://www.facebook.com/sharer/sharer.php?u=https%3A//easyshill.com/%23how-to-buy">
+    <rect x="594" y="312" fill="#fff" opacity="0" width="262" height="238"></rect>
+  </a><a xlink:href="https%3A//easyshill.com/%23how-to-buy&amp;amp;text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
+    <rect x="566" y="1528" fill="#fff" opacity="0" width="242" height="226"></rect>
+  </a><a xlink:href="https://www.tumblr.com/widgets/share/tool?canonicalUrl=https%3A//easyshill.com/%23how-to-buy&amp;amp;caption=Easiest%20shill%20of%20all%20time">
+    <rect x="392" y="1028" fill="#fff" opacity="0" width="240" height="254"></rect>
+  </a><a xlink:href="https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&amp;amp;app_id=123456789&amp;amp;redirect_uri=https%3A//easyshill.com/%23how-to-buy">
+    <rect x="832" y="1302" fill="#fff" opacity="0" width="210" height="214"></rect>
+  </a><a xlink:href="https://news.ycombinator.com/submitlink?u=https%3A//easyshill.com/%23how-to-buy&amp;amp;t=Easiest%20shill%20of%20all%20time">
+    <rect x="1606" y="738" fill="#fff" opacity="0" width="194" height="212"></rect>
+  </a><a xlink:href="https://www.tiktok.com/upload">
+    <rect x="1154" y="1494" fill="#fff" opacity="0" width="198" height="232"></rect>
+  </a><a xlink:href="https://service.weibo.com/share/share.php?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time">
+    <rect x="1454" y="1194" fill="#fff" opacity="0" width="252" height="254"></rect>
+  </a>
+</svg>
+  </div>
+
+  <!-- Add a full-width black background div beneath the image -->
+  <div style="width: 100%; height: 400px; background: black;"></div>
+
+  <!-- New section with two-column layout -->
+  <section style="width: 100%; background-color: #000000; padding: 40px 0;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap;">
+      <!-- Left column with Lorem Ipsum text -->
+      <div style="flex: 1; min-width: 300px; padding: 20px; color: #fff;">
+        <h2>Lorem Ipsum</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim.</p>
+        <p>Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio.</p>
+        <p>Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus.</p>
+      </div>
+      
+      <!-- Right column with Pumpswap widget -->
+      <div style="flex: 1; min-width: 300px; padding: 20px; color: #fff;">
+        <h2>Pumpswap Widget</h2>
+        <div id="pumpswap-widget" style="background-color: #1a1a1a; border-radius: 10px; padding: 20px; min-height: 300px;">
+          <!-- Pumpswap Widget Implementation -->
+          <script>
+            // Load Pumpswap SDK
+            (function() {
+              const script = document.createElement('script');
+              script.src = 'https://unpkg.com/@pump-fun/pump-swap-sdk@latest/dist/index.js';
+              script.async = true;
+              script.onload = function() {
+                // Initialize Pumpswap widget once SDK is loaded
+                if (window.PumpAmmSdk) {
+                  try {
+                    const pumpWidget = document.createElement('div');
+                    pumpWidget.id = 'pump-widget-container';
+                    pumpWidget.style.width = '100%';
+                    pumpWidget.style.height = '300px';
+                    pumpWidget.innerHTML = '<p style="color: #fff; text-align: center; padding-top: 120px;">Loading Pumpswap Widget...</p>';
+                    document.getElementById('pumpswap-widget').appendChild(pumpWidget);
+                    
+                    // Initialize the SDK (placeholder implementation)
+                    const pumpAmmSdk = new window.PumpAmmSdk();
+                    
+                    // This is a placeholder - the actual implementation would depend on the proper SDK documentation
+                    // Real implementation would initialize the widget here
+                  } catch (error) {
+                    console.error('Failed to initialize Pumpswap widget:', error);
+                    document.getElementById('pumpswap-widget').innerHTML = 
+                      '<p style="color: #ff6b6b; text-align: center;">Could not load Pumpswap widget. Please visit <a href="https://pump.fun" style="color: #4dabf7;">pump.fun</a> directly.</p>';
+                  }
+                } else {
+                  console.error('Pumpswap SDK not available');
+                  document.getElementById('pumpswap-widget').innerHTML = 
+                    '<p style="color: #ff6b6b; text-align: center;">Could not load Pumpswap widget. Please visit <a href="https://pump.fun" style="color: #4dabf7;">pump.fun</a> directly.</p>';
+                }
+              };
+              document.head.appendChild(script);
+            })();
+          </script>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    window.onload = function() {
+      // Get the SVG element
+      const svg = document.querySelector('.links-layer svg');
+      
+      // Create a group for orbital dots at the end of the SVG (so they're on top)
+      const orbitalDotsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      orbitalDotsGroup.setAttribute('id', 'orbital-dots-group');
+      svg.appendChild(orbitalDotsGroup);
+      
+      // Make the rect elements transparent but still clickable
+      const svgRects = document.querySelectorAll('.links-layer svg a rect');
+      svgRects.forEach(rect => {
+        rect.setAttribute('fill', 'rgba(255, 255, 255, 0)');
+        rect.setAttribute('stroke', 'transparent');
+        
+        // Add orbital dots hover effect
+        const linkElement = rect.parentElement;
+        addOrbitalDotsEffect(linkElement, rect, orbitalDotsGroup);
+      });
+    };
+    
+    // Function to add orbital dots hover effect
+    function addOrbitalDotsEffect(linkElement, rect, dotsContainer) {
+      // Get dimensions of the rectangle for positioning
+      const rectWidth = parseFloat(rect.getAttribute('width'));
+      const rectHeight = parseFloat(rect.getAttribute('height'));
+      const rectX = parseFloat(rect.getAttribute('x'));
+      const rectY = parseFloat(rect.getAttribute('y'));
+      
+      // Calculate center position
+      const cx = rectX + (rectWidth / 2);
+      const cy = rectY + (rectHeight / 2);
+      
+      // Calculate radius for orbit (10px larger than icon)
+      const iconSize = Math.min(rectWidth, rectHeight) / 2;
+      const orbitRadius = iconSize + 10;
+      
+      // Create an orbit group for this specific icon
+      const orbitGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      orbitGroup.setAttribute('class', 'orbit-group');
+      orbitGroup.style.display = 'none'; // Initially hidden
+      dotsContainer.appendChild(orbitGroup);
+      
+      // Store animation info
+      let animationFrameId = null;
+      let dotInfos = [];
+      
+      // Create the 3 orbital dots in advance
+      for (let i = 0; i < 3; i++) {
+        // Create dot
+        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        dot.setAttribute('r', 3); // 6px diameter (increased from 4px)
+        
+        // Alternate between seafoam green and violet colors
+        const colors = ['#7FFFD4', '#EE82EE']; // Seafoam green and violet
+        const colorIndex = i % 2; // Alternates between 0 and 1
+        const dotColor = colors[colorIndex];
+        
+        // Increased opacity to 0.8
+        dot.setAttribute('fill', dotColor);
+        dot.setAttribute('opacity', '0.8');
+        
+        // Stronger glow effect
+        dot.setAttribute('filter', 'drop-shadow(0 0 4px ' + dotColor + ') drop-shadow(0 0 2px rgba(255, 255, 255, 0.6))');
+        
+        // Add to the orbit group
+        orbitGroup.appendChild(dot);
+        
+        // Random starting angle
+        const startAngle = Math.random() * Math.PI * 2;
+        
+        // Random orbit speed (1.8s-2.5s per orbit)
+        const orbitalPeriod = (1800 + Math.random() * 700); // ms
+        const angularVelocity = (Math.PI * 2) / orbitalPeriod; // radians per ms
+        
+        // Store dot info
+        dotInfos.push({
+          element: dot,
+          angle: startAngle,
+          velocity: angularVelocity,
+          color: dotColor
+        });
+        
+        // Initial position
+        updateDotPosition(dotInfos[i], cx, cy, orbitRadius);
+      }
+      
+      // Function to update dot positions
+      function updateDotsPositions(timestamp) {
+        // Calculate elapsed time
+        const elapsed = timestamp - lastTimestamp;
+        lastTimestamp = timestamp;
+        
+        // Update each dot position
+        for (const dotInfo of dotInfos) {
+          // Update angle based on angular velocity and elapsed time
+          dotInfo.angle += dotInfo.velocity * elapsed;
+          
+          // Normalize angle to keep it in the 0-2π range
+          if (dotInfo.angle > Math.PI * 2) {
+            dotInfo.angle -= Math.PI * 2;
+          }
+          
+          // Update position
+          updateDotPosition(dotInfo, cx, cy, orbitRadius);
+        }
+        
+        // Continue animation
+        animationFrameId = requestAnimationFrame(updateDotsPositions);
+      }
+      
+      // Helper function to update a dot's position
+      function updateDotPosition(dotInfo, centerX, centerY, radius) {
+        const x = centerX + Math.cos(dotInfo.angle) * radius;
+        const y = centerY + Math.sin(dotInfo.angle) * radius;
+        dotInfo.element.setAttribute('cx', x);
+        dotInfo.element.setAttribute('cy', y);
+      }
+      
+      let lastTimestamp;
+      
+      // Add mouseenter event
+      linkElement.addEventListener('mouseenter', () => {
+        // Show the orbit group
+        orbitGroup.style.display = 'block';
+        orbitGroup.style.opacity = '1';
+        
+        // Start animation loop
+        lastTimestamp = performance.now();
+        animationFrameId = requestAnimationFrame(updateDotsPositions);
+      });
+      
+      // Prevent instant navigation to allow seeing the hover effect
+      linkElement.addEventListener('click', (event) => {
+        // Prevent default navigation
+        event.preventDefault();
+        
+        // Store the href to navigate to
+        const href = linkElement.getAttribute('xlink:href');
+        
+        // Wait 1 second to show the effect, then navigate
+        setTimeout(() => {
+          window.location.href = href;
+        }, 1000);
+      });
+      
+      // Add mouseleave event
+      linkElement.addEventListener('mouseleave', () => {
+        // Stop animation
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
+        }
+        
+        // Fade out orbit group
+        orbitGroup.style.transition = 'opacity 0.5s ease-out';
+        orbitGroup.style.opacity = '0';
+        
+        // Hide after fade out completes
+        setTimeout(() => {
+          orbitGroup.style.display = 'none';
+        }, 500);
+      });
+    }
+  </script>
+
+  <!-- Three.js Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="background.js"></script>
+
+  <!-- Bottom Sheet -->
+  <div id="bottom-sheet">
+    <div id="sheet-content">
+      <button id="toggle-button">
+        <span id="toggle-icon">▼</span>
+      </button>
+      
+      <!-- Capsule Content Container -->
+      <div id="capsule-container">
+        <!-- Main Content Area -->
+        <div id="main-content">
+          <!-- Message Field and Buttons -->
+          <div class="input-section">
+            <div class="input-group">
+              <label for="shill-message">Shill Message</label>
+              <textarea id="shill-message" placeholder="Enter your shill here..."></textarea>
+            </div>
+            
+            <div class="button-row">
+              <div class="button-group">
+                <button class="capsule-button">Insert Chart</button>
+                <button class="capsule-button">Insert Website</button>
+                <button class="capsule-button">Insert X</button>
+              </div>
+              
+              <div class="emoji-list">
+                <span class="emoji">😂</span>
+                <span class="emoji">🚀</span>
+                <span class="emoji">💰</span>
+                <span class="emoji">🔥</span>
+                <span class="emoji">👍</span>
+                <span class="emoji">💎</span>
+                <span class="emoji">🌙</span>
+                <span class="emoji">⭐</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Update Button with Lights -->
+          <div class="update-section">
+            <div id="relocated-lights">
+              <div id="red-light-copy" class="indicator-light active"></div>
+              <div id="green-light-copy" class="indicator-light"></div>
+            </div>
+            <button id="update-button">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Bottom Sheet Styles */
+    #bottom-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      height: 100px;
+      z-index: 1000;
+      transition: all 0.3s ease-in-out;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      overflow: hidden;
+    }
+
+    #bottom-sheet.receded {
+      transform: translateX(-50%) translateY(70px); /* Receded position, showing only 30px */
+    }
+
+    #sheet-content {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, 
+        #f5f6f7 0%, 
+        #d7d8da 20%, 
+        #aaaaaa 50%,
+        #d7d8da 80%,
+        #f5f6f7 100%);
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Add metallic highlights */
+    #sheet-content:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 20px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0));
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    /* Capsule Container */
+    #capsule-container {
+      display: flex;
+      width: 95%;
+      height: 70px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Main Content Structure */
+    #main-content {
+      display: flex;
+      width: 100%;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Input Section (Left Side) */
+    .input-section {
+      flex: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-group label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 2px;
+    }
+
+    #shill-message {
+      width: 100%;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid #aaa;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      font-size: 14px;
+      padding: 5px 10px;
+      resize: none;
+      transition: all 0.2s ease;
+    }
+
+    #shill-message:focus {
+      outline: none;
+      border-color: #7a9bc7;
+      box-shadow: 0 0 5px rgba(122, 155, 199, 0.5), inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Button Row Structure */
+    .button-row {
+      display: flex;
+      align-items: center;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-right: 15px;
+    }
+
+    .capsule-button {
+      background: linear-gradient(to bottom, #f0f0f0, #c0c0c0);
+      border: 1px solid #999;
+      border-radius: 8px;
+      padding: 4px 8px;
+      font-size: 12px;
+      color: #444;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    .capsule-button:hover {
+      background: linear-gradient(to bottom, #f5f5f5, #d0d0d0);
+    }
+
+    .emoji-list {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .emoji {
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Update Section (Right Side) */
+    .update-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #relocated-lights {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+
+    #relocated-lights .indicator-light {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #333;
+      border: 2px solid #666;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #relocated-lights .indicator-light:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0));
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    #red-light-copy.active {
+      background-color: #ff3333;
+      box-shadow: 0 0 10px rgba(255,0,0,0.5), 0 0 5px rgba(255,0,0,0.8);
+    }
+
+    #green-light-copy.active {
+      background-color: #33ff33;
+      box-shadow: 0 0 10px rgba(0,255,0,0.5), 0 0 5px rgba(0,255,0,0.8);
+    }
+
+    #update-button {
+      background: linear-gradient(to bottom, #5c8bc0, #3a6da0);
+      color: white;
+      border: 1px solid #2c5782;
+      border-radius: 10px;
+      padding: 8px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    #update-button:hover {
+      background: linear-gradient(to bottom, #6799cf, #4b7eb1);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Toggle Button */
+    #toggle-button {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 25px;
+      background: linear-gradient(to bottom, #f0f0f0, #c0c0c0);
+      border: 1px solid #999;
+      border-radius: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      z-index: 5;
+    }
+
+    #toggle-button:hover {
+      background: linear-gradient(to bottom, #f5f5f5, #d0d0d0);
+    }
+
+    #toggle-button:active {
+      background: linear-gradient(to bottom, #c0c0c0, #e0e0e0);
+    }
+
+    #toggle-icon {
+      color: #666;
+      font-size: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    #bottom-sheet.receded #toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Indicator Lights */
+    #indicator-lights {
+      position: absolute;
+      left: 50px;
+      top: 20px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .indicator-light {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #333;
+      border: 2px solid #666;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .indicator-light:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0));
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    #red-light.active {
+      background-color: #ff3333;
+      box-shadow: 0 0 10px rgba(255,0,0,0.5), 0 0 5px rgba(255,0,0,0.8);
+    }
+
+    #green-light.active {
+      background-color: #33ff33;
+      box-shadow: 0 0 10px rgba(0,255,0,0.5), 0 0 5px rgba(0,255,0,0.8);
+    }
+  </style>
+
+  <script>
+    // Bottom Sheet Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const bottomSheet = document.getElementById('bottom-sheet');
+      const toggleButton = document.getElementById('toggle-button');
+      
+      toggleButton.addEventListener('click', function() {
+        bottomSheet.classList.toggle('receded');
+      });
+    });
+  </script>
+</body>
+</html>
