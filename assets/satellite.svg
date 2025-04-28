@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <!-- Main satellite body -->
+  <g id="satellite" fill="none" stroke-width="2">
+    <path d="M50,30 L60,40 L70,35 L55,50 L50,70 L45,50 L30,65 L40,45 L30,30 L50,30" 
+          fill="#e0e0e0" stroke="#999" />
+    
+    <!-- Solar panels -->
+    <rect x="65" y="30" width="20" height="10" fill="#4080ff" stroke="#2060cc" />
+    <rect x="15" y="30" width="20" height="10" fill="#4080ff" stroke="#2060cc" />
+    
+    <!-- Antenna -->
+    <path d="M50,25 L50,15 M45,12 L55,12" stroke="#999" stroke-width="1.5" />
+    
+    <!-- Metallic details -->
+    <circle cx="50" cy="40" r="5" fill="#c0c0c0" stroke="#808080" />
+    <circle cx="50" cy="40" r="2" fill="#606060" />
+  </g>
+</svg>

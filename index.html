@@ -7,7 +7,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/three-moon.css">
   <style>
+    @font-face {
+      font-family: 'BlockyFont';
+      src: url('bont/blocky_font.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+    
     html, body { margin:0; padding:0; width:100%; height:auto; overflow:auto; background-color: #000; }
     
     /* Master Rings Layer */
@@ -64,6 +72,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/image-map-resizer/1.0.10/js/imageMapResizer.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/imagemapster/1.5.4/jquery.imagemapster.min.js"></script>
   
+  <!-- Three.js Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/improved-moon.js"></script>
+  <script src="js/moon-integration.js"></script>
+  
+  <script>
+    // Initialize image map responsiveness when page loads
+    $(document).ready(function() {
+      $('map').imageMapResize();
+    });
+  </script>
+  
   <style>
     img#master-rings {
       max-width: 60%;
@@ -74,8 +94,12 @@
   </style>
 </head>
 <body>
+  <!-- 3D Moon Container using Three.js -->
+  <div id="moon-3d-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: 7; pointer-events: none;"></div>
+
   <!-- Master Rings Layer -->
   <div class="master-rings-layer">
+    <img src="allrings.png" id="master-rings" usemap="#ring-map" alt="Master Rings" />
     <map name="ring-map">
       <area alt="pocket" coords="1173,132,127" shape="circle" href="https://getpocket.com/edit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time" />
       <area alt="pinterest" coords="636,140,116" shape="circle" href="https://pinterest.com/pin/create/button/?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;description=Easiest%20shill%20of%20all%20time" />
@@ -103,61 +127,12 @@
     </map>
   </div>
   
-  <!-- Link Overlay Layer -->
-  <div class="links-layer" id="links-container">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1800 1800">
-  <image width="100%" height="100%" xlink:href="allrings.png" align="center"></image> <a xlink:href="https://getpocket.com/edit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time&quot; coords=&quot;1173,132,127&quot; shape=&quot;circle">
-    <rect x="1048" y="6" fill="#fff" opacity="0" width="248" height="252"></rect>
-  </a><a xlink:href="https://pinterest.com/pin/create/button/?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;description=Easiest%20shill%20of%20all%20time">
-    <rect x="520" y="26" fill="#fff" opacity="0" width="232" height="228"></rect>
-  </a><a xlink:href="https://www.xing.com/spi/shares/new?url=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="180" y="320" fill="#fff" opacity="0" width="218" height="234"></rect>
-  </a><a xlink:href="https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&amp;amp;app_id=123456789&amp;amp;redirect_uri=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="42" y="766" fill="#fff" opacity="0" width="222" height="240"></rect>
-  </a><a xlink:href="https://mastodon.social/share?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="218" y="1254" fill="#fff" opacity="0" width="200" height="206"></rect>
-  </a><a xlink:href="https://api.whatsapp.com/send?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="350" y="594" fill="#fff" opacity="0" width="230" height="234"></rect>
-  </a><a xlink:href="https://share.flipboard.com/bookmarklet/popout?v=2&amp;amp;title=Easiest%20shill%20of%20all%20time&amp;amp;url=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="676" y="1064" fill="#fff" opacity="0" width="156" height="152"></rect>
-  </a><a xlink:href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="1002" y="1042" fill="#fff" opacity="0" width="148" height="162"></rect>
-  </a><a xlink:href="href=&quot;sms:?body=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="1132" y="844" fill="#fff" opacity="0" width="114" height="108"></rect>
-  </a><a xlink:href="https://vk.com/share.php?url=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="998" y="602" fill="#fff" opacity="0" width="122" height="120"></rect>
-  </a><a xlink:href="https://web.skype.com/share?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="548" y="832" fill="#fff" opacity="0" width="132" height="128"></rect>
-  </a><a xlink:href="https://social-plugins.line.me/lineit/share?url=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="689" y="605" fill="#fff" opacity="0" width="108" height="108"></rect>
-  </a><a xlink:href="https://www.reddit.com/submit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time">
-    <rect x="1218" y="1076" fill="#fff" opacity="0" width="218" height="206"></rect>
-  </a><a xlink:href="https://gab.com/compose?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="1298" y="650" fill="#fff" opacity="0" width="196" height="210"></rect>
-  </a><a xlink:href="https://twitter.com/intent/tweet?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="1480" y="308" fill="#fff" opacity="0" width="178" height="194"></rect>
-  </a><a xlink:href="mailto:?subject=Easiest%20shill%20of%20all%20time&amp;amp;body=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="1052" y="366" fill="#fff" opacity="0" width="208" height="192"></rect>
-  </a><a xlink:href="https://www.facebook.com/sharer/sharer.php?u=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="594" y="312" fill="#fff" opacity="0" width="262" height="238"></rect>
-  </a><a xlink:href="https%3A//easyshill.com/%23how-to-buy&amp;amp;text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="566" y="1528" fill="#fff" opacity="0" width="242" height="226"></rect>
-  </a><a xlink:href="https://www.tumblr.com/widgets/share/tool?canonicalUrl=https%3A//easyshill.com/%23how-to-buy&amp;amp;caption=Easiest%20shill%20of%20all%20time">
-    <rect x="392" y="1028" fill="#fff" opacity="0" width="240" height="254"></rect>
-  </a><a xlink:href="https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&amp;amp;app_id=123456789&amp;amp;redirect_uri=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="832" y="1302" fill="#fff" opacity="0" width="210" height="214"></rect>
-  </a><a xlink:href="https://news.ycombinator.com/submitlink?u=https%3A//easyshill.com/%23how-to-buy&amp;amp;t=Easiest%20shill%20of%20all%20time">
-    <rect x="1606" y="738" fill="#fff" opacity="0" width="194" height="212"></rect>
-  </a><a xlink:href="https://www.tiktok.com/upload">
-    <rect x="1154" y="1494" fill="#fff" opacity="0" width="198" height="232"></rect>
-  </a><a xlink:href="https://service.weibo.com/share/share.php?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time">
-    <rect x="1454" y="1194" fill="#fff" opacity="0" width="252" height="254"></rect>
-  </a>
-</svg>
-  </div>
+  <!-- Old Link Overlay Layer removed -->
 
   <!-- Add a full-width black background div beneath the image -->
   <div style="width: 100%; height: 400px; background: black;"></div>
+  
+  <!-- Initialization for the enhanced 3D moon happens in moon-integration.js -->
 
   <!-- New section with two-column layout -->
   <section style="width: 100%; background-color: #000000; padding: 40px 0;">

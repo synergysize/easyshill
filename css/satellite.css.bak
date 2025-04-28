@@ -1,0 +1,103 @@
+/* Satellite Element Styles */
+.satellite-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  z-index: 100;
+  cursor: pointer;
+  pointer-events: all;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.satellite {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.satellite:hover {
+  transform: scale(1.05);
+}
+
+/* Broadcast beam styling */
+.broadcast-beam {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  background: linear-gradient(135deg, 
+    rgba(0, 255, 200, 0.5) 0%, 
+    rgba(180, 0, 255, 0.5) 100%);
+  transform: translate(-50%, -50%) rotate(45deg);
+  border-radius: 50% 50% 0 50%;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  z-index: 15;
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.3), 0 0 40px rgba(180, 0, 255, 0.3);
+}
+
+.satellite-container:hover .broadcast-beam {
+  width: 400px;
+  height: 400px;
+  opacity: 0.8;
+}
+
+/* SHILL ALL text styling */
+.shill-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 36px;
+  font-weight: bold;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  color: transparent;
+  background: linear-gradient(90deg, #00ffcc, #b400ff);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 
+    0 0 10px rgba(0, 255, 200, 0.8),
+    0 0 15px rgba(180, 0, 255, 0.8),
+    0 0 25px rgba(255, 255, 255, 0.5);
+  animation: gradientShift 2s ease infinite, pulseText 1.5s ease-in-out infinite;
+  letter-spacing: 2px;
+  z-index: 16;
+}
+
+.satellite-container:hover .shill-text {
+  opacity: 1;
+}
+
+@keyframes pulseText {
+  0% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
+  50% { transform: translate(-50%, -50%) rotate(-45deg) scale(1.05); }
+  100% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
+}
+
+/* Animation for text shimmer effect */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; filter: brightness(1); }
+  50% { background-position: 100% 50%; filter: brightness(1.2); }
+  100% { background-position: 0% 50%; filter: brightness(1); }
+}
+
+/* Make sure the satellite container doesn't interfere with other elements */
+.satellite-container {
+  pointer-events: auto;
+}
+
+.satellite-container * {
+  pointer-events: none;
+}

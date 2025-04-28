@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test 3D Moon Animation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/moon.css">
+  <style>
+    @font-face {
+      font-family: 'BlockyFont';
+      src: url('bont/blocky_font.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+    
+    html, body { margin:0; padding:0; width:100%; height:100vh; overflow:hidden; background-color: #000; }
+    
+    /* Background stars */
+    body {
+      background: url('background.png') repeat;
+    }
+    
+    /* Center everything */
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    
+    /* Custom styles for the test page */
+    .moon-container {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      transform: none !important;
+    }
+    
+    /* Control panel for adjusting settings */
+    .control-panel {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 15px;
+      border-radius: 8px;
+      color: white;
+      font-family: Arial, sans-serif;
+      z-index: 100;
+    }
+    
+    .control-panel h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+    
+    .control-panel label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    
+    .control-panel input {
+      width: 200px;
+    }
+    
+    .control-panel button {
+      margin-top: 15px;
+      padding: 5px 10px;
+      background: #4444aa;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .control-panel button:hover {
+      background: #5555cc;
+    }
+  </style>
+</head>
+<body>
+  <div class="control-panel">
+    <h2>Moon Animation Controls</h2>
+    <label for="rotation-speed">Rotation Speed (seconds)</label>
+    <input type="range" id="rotation-speed" min="5" max="30" value="20" step="1">
+    <span id="speed-value">20s</span>
+    
+    <button id="apply-settings">Apply Settings</button>
+  </div>
+
+  <div class="container">
+    <!-- Moon Element - Using the updated structure -->
+    <div class="moon-container">
+      <div class="moon-orbit">
+        <div class="moon">
+          <!-- Main faces (front, back, sides, top, bottom) -->
+          <div class="moon-face moon-face-front">
+            <!-- SHILL ALL text on the front face of the moon -->
+            <div class="shill-all-text">SHILL ALL<br><span class="click-here">(Click Here)</span></div>
+            <!-- Craters on front face -->
+            <div class="crater crater-1"></div>
+            <div class="crater crater-2"></div>
+          </div>
+          <div class="moon-face moon-face-right"></div>
+          <div class="moon-face moon-face-back">
+            <!-- Crater on back face -->
+            <div class="crater crater-3"></div>
+          </div>
+          <div class="moon-face moon-face-left"></div>
+          <div class="moon-face moon-face-top"></div>
+          <div class="moon-face moon-face-bottom"></div>
+          
+          <!-- Intermediate faces to make the sphere smoother -->
+          <div class="moon-face moon-face-front-right"></div>
+          <div class="moon-face moon-face-back-right"></div>
+          <div class="moon-face moon-face-back-left"></div>
+          <div class="moon-face moon-face-front-left"></div>
+          
+          <!-- Top intermediate faces -->
+          <div class="moon-face moon-face-top-front"></div>
+          <div class="moon-face moon-face-top-right"></div>
+          <div class="moon-face moon-face-top-back"></div>
+          <div class="moon-face moon-face-top-left"></div>
+          
+          <!-- Bottom intermediate faces -->
+          <div class="moon-face moon-face-bottom-front"></div>
+          <div class="moon-face moon-face-bottom-right"></div>
+          <div class="moon-face moon-face-bottom-back"></div>
+          <div class="moon-face moon-face-bottom-left"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Control panel functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const speedSlider = document.getElementById('rotation-speed');
+      const speedValue = document.getElementById('speed-value');
+      const applyButton = document.getElementById('apply-settings');
+      const moon = document.querySelector('.moon');
+      
+      // Update the displayed value when slider changes
+      speedSlider.addEventListener('input', function() {
+        speedValue.textContent = this.value + 's';
+      });
+      
+      // Apply the settings when button is clicked
+      applyButton.addEventListener('click', function() {
+        const rotationDuration = speedSlider.value;
+        
+        // Remove any existing animation
+        moon.style.animation = 'none';
+        
+        // Force reflow to ensure the animation restart
+        void moon.offsetWidth;
+        
+        // Apply new animation duration
+        moon.style.animation = `moonRotation ${rotationDuration}s linear infinite`;
+      });
+    });
+  </script>
+</body>
+</html>

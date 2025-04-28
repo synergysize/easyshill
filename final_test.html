@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Moon Integration Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/three-moon.css">
+  <style>
+    @font-face {
+      font-family: 'BlockyFont';
+      src: url('bont/blocky_font.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+    
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #000 url('background.png') repeat;
+      overflow: hidden;
+    }
+    
+    .master-rings-layer {
+      position: relative;
+      width: 100%;
+      z-index: 10;
+      text-align: center;
+      padding-top: 20px;
+    }
+    
+    .master-rings-layer map {
+      display: inline-block;
+    }
+    
+    /* Make sure image map areas are clickable */
+    .master-rings-layer area {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    
+    img#master-rings {
+      max-width: 60%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    
+    /* Control panel for testing */
+    .controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: Arial, sans-serif;
+      z-index: 100;
+      max-width: 250px;
+    }
+    
+    .controls h2 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #39ffd4;
+    }
+    
+    .controls p {
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    
+    .controls button {
+      background: linear-gradient(to right, #ff00ff, #39ffd4);
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <h2>3D Moon Integration Test</h2>
+    <p>The 3D Moon should appear centered inside the innermost ring, rotating around its Y-axis with a 20-second cycle.</p>
+    <button id="toggle-helpers">Show Rings</button>
+  </div>
+
+  <!-- 3D Moon Container -->
+  <div id="moon-3d-container"></div>
+  
+  <!-- Master Rings Layer -->
+  <div class="master-rings-layer">
+    <img src="allrings.png" id="master-rings" usemap="#ring-map" alt="Master Rings" />
+    <map name="ring-map">
+      <area alt="pocket" coords="1173,132,127" shape="circle" href="#" />
+      <area alt="pinterest" coords="636,140,116" shape="circle" href="#" />
+      <area alt="xing" coords="289,437,109" shape="circle" href="#" />
+      <area alt="messenger" coords="153,886,111" shape="circle" href="#" />
+    </map>
+  </div>
+
+  <!-- Three.js Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/image-map-resizer/1.0.10/js/imageMapResizer.min.js"></script>
+  <script src="js/improved-moon.js"></script>
+  
+  <script>
+    // Initialize the 3D Moon when the document is ready
+    let enhancedMoon;
+    
+    $(document).ready(function() {
+      // Initialize image map
+      $('map').imageMapResize();
+      
+      // Create the 3D Moon
+      enhancedMoon = new EnhancedMoon3D('moon-3d-container');
+      
+      // Set rotation speed (20 seconds per rotation)
+      enhancedMoon.setRotationSpeed(20);
+      
+      // Set moon size to fit inside innermost ring
+      // Significantly reduced size to ensure moon fits in the smallest ring
+      enhancedMoon.setMoonSize(30);
+      
+      // Toggle helper button functionality
+      document.getElementById('toggle-helpers').addEventListener('click', function() {
+        const ringsImg = document.getElementById('master-rings');
+        if (ringsImg.style.opacity === '0.2') {
+          ringsImg.style.opacity = '1';
+          this.textContent = 'Hide Rings';
+        } else {
+          ringsImg.style.opacity = '0.2';
+          this.textContent = 'Show Rings';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

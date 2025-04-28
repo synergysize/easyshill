@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test 3D Moon with Three.js</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/three-moon.css">
+  <style>
+    html, body { 
+      margin: 0; 
+      padding: 0; 
+      width: 100%; 
+      height: 100vh; 
+      overflow: hidden; 
+      background-color: #000; 
+    }
+    
+    /* Background stars */
+    body {
+      background: url('background.png') repeat;
+    }
+    
+    /* Control panel for adjusting settings */
+    .control-panel {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 15px;
+      border-radius: 8px;
+      color: white;
+      font-family: Arial, sans-serif;
+      z-index: 100;
+    }
+    
+    .control-panel h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+    
+    .control-panel label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    
+    .control-panel input {
+      width: 200px;
+    }
+    
+    .control-panel button {
+      margin-top: 15px;
+      padding: 5px 10px;
+      background: #4444aa;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .control-panel button:hover {
+      background: #5555cc;
+    }
+  </style>
+</head>
+<body>
+  <div class="control-panel">
+    <h2>Moon Animation Controls</h2>
+    <label for="rotation-speed">Rotation Speed (seconds)</label>
+    <input type="range" id="rotation-speed" min="5" max="30" value="20" step="1">
+    <span id="speed-value">20s</span>
+    
+    <button id="apply-settings">Apply Settings</button>
+  </div>
+
+  <!-- 3D Moon Container -->
+  <div id="moon-3d-container" style="width: 100%; height: 500px;"></div>
+  
+  <!-- Three.js Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/3d-moon.js"></script>
+  
+  <script>
+    // Initialize the 3D Moon
+    let moon3D;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create the 3D Moon
+      moon3D = new Moon3D('moon-3d-container');
+      
+      // Control panel functionality
+      const speedSlider = document.getElementById('rotation-speed');
+      const speedValue = document.getElementById('speed-value');
+      const applyButton = document.getElementById('apply-settings');
+      
+      // Update the displayed value when slider changes
+      speedSlider.addEventListener('input', function() {
+        speedValue.textContent = this.value + 's';
+      });
+      
+      // Apply the settings when button is clicked
+      applyButton.addEventListener('click', function() {
+        const rotationDuration = parseInt(speedSlider.value);
+        moon3D.setRotationSpeed(rotationDuration);
+      });
+    });
+  </script>
+</body>
+</html>
