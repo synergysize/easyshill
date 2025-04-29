@@ -10,9 +10,16 @@
   <link rel="stylesheet" href="css/three-moon.css">
   <style>
     @font-face {
-      font-family: 'BlockyFont';
-      src: url('bont/blocky_font.ttf') format('truetype');
+      font-family: 'blocky_font';
+      src: url('font/blocky_font.ttf') format('truetype');
       font-weight: bold;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'digital-7';
+      src: url('font/digital-7.ttf') format('truetype');
+      font-weight: normal;
       font-style: normal;
     }
     
@@ -97,9 +104,17 @@
   <!-- 3D Moon Container using Three.js -->
   <div id="moon-3d-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: 7; pointer-events: none;"></div>
 
+  <!-- Attention Trench Mercenaries Section -->
+  <div style="text-align: center; margin: 40px 0 20px; font-family: 'blocky_font', sans-serif; color: #ff0000; font-size: 48px; font-weight: bold; text-shadow: 0 0 15px rgba(255,0,0,0.8); letter-spacing: 2px;">
+    !!ATTENTION TRENCH MERCENARIES!!
+  </div>
+
   <!-- Master Rings Layer -->
   <div class="master-rings-layer">
     <img src="allrings.png" id="master-rings" usemap="#ring-map" alt="Master Rings" />
+    <div style="text-align: center; margin: 20px 0; font-family: 'digital-7', monospace; color: white; font-size: 24px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,255,255,0.5);">
+      ENJOY A FULL ARRAY OF PRE-FILLED SHILL LINKS FOR YOUR CONVENIENCE
+    </div>
     <map name="ring-map">
       <area alt="pocket" coords="1173,132,127" shape="circle" href="https://getpocket.com/edit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time" />
       <area alt="pinterest" coords="636,140,116" shape="circle" href="https://pinterest.com/pin/create/button/?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;description=Easiest%20shill%20of%20all%20time" />
