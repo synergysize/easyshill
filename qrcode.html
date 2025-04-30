@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EasyShill - Free Money</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/three-moon.css">
+  <style>
+    @font-face {
+      font-family: 'blocky_font';
+      src: url('font/blocky_font.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'digital-7';
+      src: url('font/digital-7.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'spacex';
+      src: url('font/spacex.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    html, body { 
+      margin:0; 
+      padding:0; 
+      width:100%; 
+      height:100%; 
+      overflow:auto; 
+      background-color: #000; 
+    }
+    
+    .content-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-top: 20vh;
+      text-align: center;
+    }
+    
+    .free-money-title {
+      font-family: 'digital-7', monospace;
+      color: #00ff7f; /* Seafoam green color */
+      font-size: 64px;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px rgba(0,255,127,0.8);
+    }
+    
+    .wallet-form {
+      background-color: rgba(0, 0, 0, 0.7);
+      border: 2px solid #39ffd4; /* Border color */
+      border-radius: 10px;
+      padding: 30px;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+    
+    .wallet-description {
+      font-family: 'blocky_font', sans-serif;
+      color: white;
+      font-size: 20px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+    
+    .wallet-input {
+      width: 100%;
+      max-width: 500px;
+      padding: 12px;
+      margin-bottom: 20px;
+      background-color: rgba(20, 20, 20, 0.8);
+      border: 2px solid #39ffd4;
+      border-radius: 5px;
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 16px;
+    }
+    
+    .submit-button {
+      padding: 12px 30px;
+      background: linear-gradient(45deg, #00ff7f, #39ffd4);
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-family: 'blocky_font', sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      box-shadow: 0 0 15px rgba(57, 255, 212, 0.7);
+    }
+    
+    .submit-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(57, 255, 212, 0.9);
+    }
+  </style>
+  <!-- jQuery and three.js libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/improved-moon.js"></script>
+  <script src="js/moon-integration.js"></script>
+</head>
+<body>
+  <!-- 3D Moon Container using Three.js -->
+  <div id="moon-3d-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: 7; pointer-events: none;"></div>
+  
+  <!-- Main content container -->
+  <div class="content-container">
+    <!-- Free Money Heading -->
+    <h1 class="free-money-title">FREE MONEY!</h1>
+    
+    <!-- Wallet Form -->
+    <div class="wallet-form">
+      <p class="wallet-description">
+        Please enter your Solana wallet address to receive $10 in free $EZ tokens!
+      </p>
+      
+      <form id="wallet-form">
+        <input type="text" class="wallet-input" id="solana-wallet" placeholder="Enter your Solana wallet address..." required>
+        <button type="submit" class="submit-button">CLAIM FREE TOKENS</button>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    // Form submission handler
+    document.getElementById('wallet-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      // Get wallet address
+      const walletAddress = document.getElementById('solana-wallet').value;
+      
+      // Simple validation
+      if (!walletAddress || walletAddress.trim().length < 32) {
+        alert('Please enter a valid Solana wallet address');
+        return;
+      }
+      
+      // Show success message
+      alert('Thanks! Your free $EZ tokens will be sent shortly!');
+      
+      // Reset form
+      document.getElementById('wallet-form').reset();
+    });
+  </script>
+</body>
+</html>

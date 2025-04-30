@@ -10,11 +10,14 @@
   <style>
     html, body { margin:0; padding:0; width:100%; height:auto; overflow:auto; background-color: #000; }
     
+    /* Make sure bottom content is visible */
+    body { padding-bottom: 200px; }
+    
     /* Master Rings Layer */
     .master-rings-layer {
       position: relative;
       width: 100%;
-      z-index: 10;
+      z-index: 20;
       text-align: center;
       padding-top: 20px;
     }
@@ -31,12 +34,12 @@
     
     /* Link Overlay Layer */
     .links-layer {
-      position: absolute;
+      position: relative;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 5; /* Lower z-index so the image map can work */
+      z-index: 10; /* Lower z-index than master-rings-layer */
     }
     
     /* Make all links/areas clickable */
@@ -58,6 +61,28 @@
     .links-layer svg a {
       cursor: pointer;
     }
+    
+    /* Font faces from verify_changes.html */
+    @font-face {
+      font-family: 'blocky_font';
+      src: url('font/blocky_font.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'digital-7';
+      src: url('font/digital-7.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'spacex';
+      src: url('font/spacex.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
   </style>
   <!-- jQuery and image map libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -74,8 +99,15 @@
   </style>
 </head>
 <body>
-  <!-- Master Rings Layer -->
+  <!-- 3D Moon Container using Three.js -->
+  <div id="moon-3d-container" style="z-index: 5; position: absolute; pointer-events: none; top: 0; left: 0; width: 100%; height: 100vh;"></div>
+  
+  <!-- Master Rings Layer - Only keep the top single set as shown in mockup.png -->
   <div class="master-rings-layer">
+    <img src="allrings.png" id="master-rings" usemap="#ring-map" alt="Master Rings" />
+    <div style="text-align: center; margin: 20px 0; font-family: 'digital-7', monospace; color: white; font-size: 24px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,255,255,0.5);">
+      ENJOY A FULL ARRAY OF PRE-FILLED SHILL LINKS FOR YOUR CONVENIENCE
+    </div>
     <map name="ring-map">
       <area alt="pocket" coords="1173,132,127" shape="circle" href="https://getpocket.com/edit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time" />
       <area alt="pinterest" coords="636,140,116" shape="circle" href="https://pinterest.com/pin/create/button/?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;description=Easiest%20shill%20of%20all%20time" />
@@ -103,289 +135,84 @@
     </map>
   </div>
   
-  <!-- Link Overlay Layer -->
-  <div class="links-layer" id="links-container">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1800 1800">
-  <image width="100%" height="100%" xlink:href="allrings.png" align="center"></image> <a xlink:href="https://getpocket.com/edit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time&quot; coords=&quot;1173,132,127&quot; shape=&quot;circle">
-    <rect x="1048" y="6" fill="#fff" opacity="0" width="248" height="252"></rect>
-  </a><a xlink:href="https://pinterest.com/pin/create/button/?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;description=Easiest%20shill%20of%20all%20time">
-    <rect x="520" y="26" fill="#fff" opacity="0" width="232" height="228"></rect>
-  </a><a xlink:href="https://www.xing.com/spi/shares/new?url=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="180" y="320" fill="#fff" opacity="0" width="218" height="234"></rect>
-  </a><a xlink:href="https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&amp;amp;app_id=123456789&amp;amp;redirect_uri=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="42" y="766" fill="#fff" opacity="0" width="222" height="240"></rect>
-  </a><a xlink:href="https://mastodon.social/share?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="218" y="1254" fill="#fff" opacity="0" width="200" height="206"></rect>
-  </a><a xlink:href="https://api.whatsapp.com/send?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="350" y="594" fill="#fff" opacity="0" width="230" height="234"></rect>
-  </a><a xlink:href="https://share.flipboard.com/bookmarklet/popout?v=2&amp;amp;title=Easiest%20shill%20of%20all%20time&amp;amp;url=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="676" y="1064" fill="#fff" opacity="0" width="156" height="152"></rect>
-  </a><a xlink:href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="1002" y="1042" fill="#fff" opacity="0" width="148" height="162"></rect>
-  </a><a xlink:href="href=&quot;sms:?body=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="1132" y="844" fill="#fff" opacity="0" width="114" height="108"></rect>
-  </a><a xlink:href="https://vk.com/share.php?url=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="998" y="602" fill="#fff" opacity="0" width="122" height="120"></rect>
-  </a><a xlink:href="https://web.skype.com/share?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="548" y="832" fill="#fff" opacity="0" width="132" height="128"></rect>
-  </a><a xlink:href="https://social-plugins.line.me/lineit/share?url=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="689" y="605" fill="#fff" opacity="0" width="108" height="108"></rect>
-  </a><a xlink:href="https://www.reddit.com/submit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time">
-    <rect x="1218" y="1076" fill="#fff" opacity="0" width="218" height="206"></rect>
-  </a><a xlink:href="https://gab.com/compose?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="1298" y="650" fill="#fff" opacity="0" width="196" height="210"></rect>
-  </a><a xlink:href="https://twitter.com/intent/tweet?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="1480" y="308" fill="#fff" opacity="0" width="178" height="194"></rect>
-  </a><a xlink:href="mailto:?subject=Easiest%20shill%20of%20all%20time&amp;amp;body=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="1052" y="366" fill="#fff" opacity="0" width="208" height="192"></rect>
-  </a><a xlink:href="https://www.facebook.com/sharer/sharer.php?u=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="594" y="312" fill="#fff" opacity="0" width="262" height="238"></rect>
-  </a><a xlink:href="https%3A//easyshill.com/%23how-to-buy&amp;amp;text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy">
-    <rect x="566" y="1528" fill="#fff" opacity="0" width="242" height="226"></rect>
-  </a><a xlink:href="https://www.tumblr.com/widgets/share/tool?canonicalUrl=https%3A//easyshill.com/%23how-to-buy&amp;amp;caption=Easiest%20shill%20of%20all%20time">
-    <rect x="392" y="1028" fill="#fff" opacity="0" width="240" height="254"></rect>
-  </a><a xlink:href="https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&amp;amp;app_id=123456789&amp;amp;redirect_uri=https%3A//easyshill.com/%23how-to-buy">
-    <rect x="832" y="1302" fill="#fff" opacity="0" width="210" height="214"></rect>
-  </a><a xlink:href="https://news.ycombinator.com/submitlink?u=https%3A//easyshill.com/%23how-to-buy&amp;amp;t=Easiest%20shill%20of%20all%20time">
-    <rect x="1606" y="738" fill="#fff" opacity="0" width="194" height="212"></rect>
-  </a><a xlink:href="https://www.tiktok.com/upload">
-    <rect x="1154" y="1494" fill="#fff" opacity="0" width="198" height="232"></rect>
-  </a><a xlink:href="https://service.weibo.com/share/share.php?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time">
-    <rect x="1454" y="1194" fill="#fff" opacity="0" width="252" height="254"></rect>
-  </a>
-</svg>
-  </div>
-
   <!-- Add a full-width black background div beneath the image -->
-  <div style="width: 100%; height: 400px; background: black;"></div>
-
-  <!-- New section with two-column layout -->
-  <section style="width: 100%; background-color: #000000; padding: 40px 0;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap;">
-      <!-- Left column with Lorem Ipsum text -->
-      <div style="flex: 1; min-width: 300px; padding: 20px; color: #fff;">
-        <h2>Lorem Ipsum</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim.</p>
-        <p>Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio.</p>
-        <p>Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus.</p>
-      </div>
-      
-      <!-- Right column with Pumpswap widget -->
-      <div style="flex: 1; min-width: 300px; padding: 20px; color: #fff;">
-        <h2>Pumpswap Widget</h2>
-        <div id="pumpswap-widget" style="background-color: #1a1a1a; border-radius: 10px; padding: 20px; min-height: 300px;">
-          <!-- Pumpswap Widget Implementation -->
-          <script>
-            // Load Pumpswap SDK
-            (function() {
-              const script = document.createElement('script');
-              script.src = 'https://unpkg.com/@pump-fun/pump-swap-sdk@latest/dist/index.js';
-              script.async = true;
-              script.onload = function() {
-                // Initialize Pumpswap widget once SDK is loaded
-                if (window.PumpAmmSdk) {
-                  try {
-                    const pumpWidget = document.createElement('div');
-                    pumpWidget.id = 'pump-widget-container';
-                    pumpWidget.style.width = '100%';
-                    pumpWidget.style.height = '300px';
-                    pumpWidget.innerHTML = '<p style="color: #fff; text-align: center; padding-top: 120px;">Loading Pumpswap Widget...</p>';
-                    document.getElementById('pumpswap-widget').appendChild(pumpWidget);
-                    
-                    // Initialize the SDK (placeholder implementation)
-                    const pumpAmmSdk = new window.PumpAmmSdk();
-                    
-                    // This is a placeholder - the actual implementation would depend on the proper SDK documentation
-                    // Real implementation would initialize the widget here
-                  } catch (error) {
-                    console.error('Failed to initialize Pumpswap widget:', error);
-                    document.getElementById('pumpswap-widget').innerHTML = 
-                      '<p style="color: #ff6b6b; text-align: center;">Could not load Pumpswap widget. Please visit <a href="https://pump.fun" style="color: #4dabf7;">pump.fun</a> directly.</p>';
-                  }
-                } else {
-                  console.error('Pumpswap SDK not available');
-                  document.getElementById('pumpswap-widget').innerHTML = 
-                    '<p style="color: #ff6b6b; text-align: center;">Could not load Pumpswap widget. Please visit <a href="https://pump.fun" style="color: #4dabf7;">pump.fun</a> directly.</p>';
-                }
-              };
-              document.head.appendChild(script);
-            })();
-          </script>
+  <div style="width: 100%; background: black; padding-top: 20px;"></div>
+  
+  <!-- Content from verify_changes.html -->
+  <section style="width: 100%; background-color: #000000; padding: 20px 0; position: relative; z-index: 10; margin-bottom: 50px;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+      <div class="section">
+        <div class="two-column" style="display: flex; flex-wrap: wrap;">
+          <!-- Left column - What is a marketing-first token -->
+          <div class="column" style="flex: 1; min-width: 300px; padding: 20px;">
+            <h2 class="green" style="font-family: 'digital-7', monospace; text-align: center; color: #00ff7f; font-size: 32px; margin-bottom: 20px; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,255,127,0.8);">WHAT IS A MARKETING-FIRST TOKEN?</h2>
+            <p class="white" style="font-family: 'blocky_font', sans-serif; color: white; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+              Marketing-first means we put shilling, brand awareness, and market share over everything else. We're not about the memes, we're about the money. We recognize that a community exists to mobilize and we are mightier together than apart.
+            </p>
+          </div>
+          
+          <!-- Right column - How will EasyShill hit $100M MC -->
+          <div class="column" style="flex: 1; min-width: 300px; padding: 20px;">
+            <h2 class="green" style="font-family: 'digital-7', monospace; text-align: center; color: #00ff7f; font-size: 32px; margin-bottom: 20px; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,255,127,0.8);">HOW WILL EASYSHILL HIT $100M MC?</h2>
+            <p class="white" style="font-family: 'blocky_font', sans-serif; color: white; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+              Through an all-star line-up of marketers (see below), and a blend of traditional, guerrilla, and viral marketing tactics. We will announce our A few minutes after launch. We're so confident in EasyShill our success that we've launched without influencers.
+            </p>
+          </div>
+        </div>
+        
+        <!-- War zone battle sentence -->
+        <div class="battle-text" style="font-family: 'blocky_font', sans-serif; color: white; font-size: 32px; font-weight: bold; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255,255,255,0.6); text-align: center; margin: 40px 0;">
+          The space is a warzone, and we came to do battle. Stop fighting for scraps in the trenches; enlist with the best of the best and let's win the war.
+        </div>
+        
+        <!-- Who's behind EasyShill heading -->
+        <div class="team-heading" style="text-align: center; margin: 40px 0 20px;">
+          <h2 style="font-family: 'blocky_font', sans-serif; font-size: 42px; font-weight: bold; letter-spacing: 2px; margin: 0;">
+            <span class="green" style="color: #00ff7f; text-shadow: 0 0 15px rgba(0,255,127,0.8);">WHO'S BEHIND </span>
+            <span class="violet" style="color: #ee82ee; text-shadow: 0 0 15px rgba(238,130,238,0.8);">EASYSHILL?</span>
+          </h2>
+        </div>
+        
+        <!-- Team member section -->
+        <div class="team-members" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+          <!-- Team Member 1 - DragoR -->
+          <div class="team-member" style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
+            <img src="1.png" alt="DragoR" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
+            <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6);">DragoR</h3>
+            <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
+              Dragor is an OG marketing guru. He's had many names, but his work all carries a signature of excellence. Dragor led the infamous Chainlink–4chan campaign during Bull '21. It's considered one of the best grassroots campaigns ever launched.
+            </p>
+          </div>
+          
+          <!-- Team Member 2 - Boudica -->
+          <div class="team-member" style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
+            <img src="2.png" alt="Boudica" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
+            <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6);">Boudica</h3>
+            <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
+              Boudica's thrown up staggering numbers on everything he's touched, but his claim to fame is being the driving catalyst behind the Kitty Inu pump from $1.2m to $200m market cap.
+            </p>
+          </div>
+          
+          <!-- Team Member 3 - JourneyComes -->
+          <div class="team-member" style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
+            <img src="3.png" alt="JourneyComes" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
+            <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6);">JourneyComes</h3>
+            <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
+              JourneyComes has worked with Floyd Mayweather, Reese Witherspoon, and more, but before her star-studded journey came, her efforts helped cement $CULT as first mover for the '22–'23 Ryoshi craze.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
-
+  
+  <!-- JavaScript for initializing and resizing image maps -->
   <script>
-    window.onload = function() {
-      // Get the SVG element
-      const svg = document.querySelector('.links-layer svg');
-      
-      // Create a group for orbital dots at the end of the SVG (so they're on top)
-      const orbitalDotsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      orbitalDotsGroup.setAttribute('id', 'orbital-dots-group');
-      svg.appendChild(orbitalDotsGroup);
-      
-      // Make the rect elements transparent but still clickable
-      const svgRects = document.querySelectorAll('.links-layer svg a rect');
-      svgRects.forEach(rect => {
-        rect.setAttribute('fill', 'rgba(255, 255, 255, 0)');
-        rect.setAttribute('stroke', 'transparent');
-        
-        // Add orbital dots hover effect
-        const linkElement = rect.parentElement;
-        addOrbitalDotsEffect(linkElement, rect, orbitalDotsGroup);
-      });
-    };
-    
-    // Function to add orbital dots hover effect
-    function addOrbitalDotsEffect(linkElement, rect, dotsContainer) {
-      // Get dimensions of the rectangle for positioning
-      const rectWidth = parseFloat(rect.getAttribute('width'));
-      const rectHeight = parseFloat(rect.getAttribute('height'));
-      const rectX = parseFloat(rect.getAttribute('x'));
-      const rectY = parseFloat(rect.getAttribute('y'));
-      
-      // Calculate center position
-      const cx = rectX + (rectWidth / 2);
-      const cy = rectY + (rectHeight / 2);
-      
-      // Calculate radius for orbit (10px larger than icon)
-      const iconSize = Math.min(rectWidth, rectHeight) / 2;
-      const orbitRadius = iconSize + 10;
-      
-      // Create an orbit group for this specific icon
-      const orbitGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      orbitGroup.setAttribute('class', 'orbit-group');
-      orbitGroup.style.display = 'none'; // Initially hidden
-      dotsContainer.appendChild(orbitGroup);
-      
-      // Store animation info
-      let animationFrameId = null;
-      let dotInfos = [];
-      
-      // Create the 3 orbital dots in advance
-      for (let i = 0; i < 3; i++) {
-        // Create dot
-        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        dot.setAttribute('r', 3); // 6px diameter (increased from 4px)
-        
-        // Alternate between seafoam green and violet colors
-        const colors = ['#7FFFD4', '#EE82EE']; // Seafoam green and violet
-        const colorIndex = i % 2; // Alternates between 0 and 1
-        const dotColor = colors[colorIndex];
-        
-        // Increased opacity to 0.8
-        dot.setAttribute('fill', dotColor);
-        dot.setAttribute('opacity', '0.8');
-        
-        // Stronger glow effect
-        dot.setAttribute('filter', 'drop-shadow(0 0 4px ' + dotColor + ') drop-shadow(0 0 2px rgba(255, 255, 255, 0.6))');
-        
-        // Add to the orbit group
-        orbitGroup.appendChild(dot);
-        
-        // Random starting angle
-        const startAngle = Math.random() * Math.PI * 2;
-        
-        // Random orbit speed (1.8s-2.5s per orbit)
-        const orbitalPeriod = (1800 + Math.random() * 700); // ms
-        const angularVelocity = (Math.PI * 2) / orbitalPeriod; // radians per ms
-        
-        // Store dot info
-        dotInfos.push({
-          element: dot,
-          angle: startAngle,
-          velocity: angularVelocity,
-          color: dotColor
-        });
-        
-        // Initial position
-        updateDotPosition(dotInfos[i], cx, cy, orbitRadius);
-      }
-      
-      // Function to update dot positions
-      function updateDotsPositions(timestamp) {
-        // Calculate elapsed time
-        const elapsed = timestamp - lastTimestamp;
-        lastTimestamp = timestamp;
-        
-        // Update each dot position
-        for (const dotInfo of dotInfos) {
-          // Update angle based on angular velocity and elapsed time
-          dotInfo.angle += dotInfo.velocity * elapsed;
-          
-          // Normalize angle to keep it in the 0-2π range
-          if (dotInfo.angle > Math.PI * 2) {
-            dotInfo.angle -= Math.PI * 2;
-          }
-          
-          // Update position
-          updateDotPosition(dotInfo, cx, cy, orbitRadius);
-        }
-        
-        // Continue animation
-        animationFrameId = requestAnimationFrame(updateDotsPositions);
-      }
-      
-      // Helper function to update a dot's position
-      function updateDotPosition(dotInfo, centerX, centerY, radius) {
-        const x = centerX + Math.cos(dotInfo.angle) * radius;
-        const y = centerY + Math.sin(dotInfo.angle) * radius;
-        dotInfo.element.setAttribute('cx', x);
-        dotInfo.element.setAttribute('cy', y);
-      }
-      
-      let lastTimestamp;
-      
-      // Add mouseenter event
-      linkElement.addEventListener('mouseenter', () => {
-        // Show the orbit group
-        orbitGroup.style.display = 'block';
-        orbitGroup.style.opacity = '1';
-        
-        // Start animation loop
-        lastTimestamp = performance.now();
-        animationFrameId = requestAnimationFrame(updateDotsPositions);
-      });
-      
-      // Prevent instant navigation to allow seeing the hover effect
-      linkElement.addEventListener('click', (event) => {
-        // Prevent default navigation
-        event.preventDefault();
-        
-        // Store the href to navigate to
-        const href = linkElement.getAttribute('xlink:href');
-        
-        // Wait 1 second to show the effect, then navigate
-        setTimeout(() => {
-          window.location.href = href;
-        }, 1000);
-      });
-      
-      // Add mouseleave event
-      linkElement.addEventListener('mouseleave', () => {
-        // Stop animation
-        if (animationFrameId) {
-          cancelAnimationFrame(animationFrameId);
-          animationFrameId = null;
-        }
-        
-        // Fade out orbit group
-        orbitGroup.style.transition = 'opacity 0.5s ease-out';
-        orbitGroup.style.opacity = '0';
-        
-        // Hide after fade out completes
-        setTimeout(() => {
-          orbitGroup.style.display = 'none';
-        }, 500);
-      });
-    }
+    // Initialize and resize image maps when document is ready
+    $(document).ready(function() {
+      $('map').imageMapResize();
+    });
   </script>
-
-  <!-- Three.js Script -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="background.js"></script>
 
   <!-- Bottom Sheet -->
   <div id="bottom-sheet">
@@ -800,6 +627,189 @@
       window.addEventListener('resize', function() {
         bottomSheet.style.height = '160px';
       });
+      
+      // Variables to track which links are inserted
+      let hasChart = false;
+      let hasWebsite = false;
+      let hasX = false;
+      
+      // Handle capsule buttons (Insert Chart, Insert Website, Insert X)
+      const capsuleButtons = document.querySelectorAll('.capsule-button');
+      capsuleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const buttonText = this.textContent.trim();
+          if (buttonText === 'Insert Chart') {
+            hasChart = true;
+          } else if (buttonText === 'Insert Website') {
+            hasWebsite = true;
+          } else if (buttonText === 'Insert X') {
+            hasX = true;
+          }
+          // Visual feedback for the button click
+          this.style.backgroundColor = '#e0e0e0';
+          setTimeout(() => {
+            this.style.backgroundColor = '';
+          }, 200);
+        });
+      });
+      
+      // Handle emoji clicks
+      const emojis = document.querySelectorAll('.emoji');
+      emojis.forEach(emoji => {
+        emoji.addEventListener('click', function() {
+          const shillMessage = document.getElementById('shill-message');
+          shillMessage.value += ' ' + this.textContent;
+        });
+      });
+      
+      // Handle "Update Links" button click
+      const updateButton = document.getElementById('update-button');
+      updateButton.addEventListener('click', function() {
+        updateAllLinks();
+      });
+      
+      // Function to update all social media links
+      function updateAllLinks() {
+        // Get the message from the textarea
+        const inputMessage = document.getElementById('shill-message').value.trim();
+        
+        // Build the full message with optional links
+        let fullMessage = inputMessage;
+        
+        // Add selected emojis
+        const selectedEmojis = Array.from(document.querySelectorAll('.emoji'))
+          .map(emoji => emoji.textContent)
+          .join(' ');
+        
+        if (selectedEmojis) {
+          fullMessage += ' ' + selectedEmojis;
+        }
+        
+        // Add inserted links if selected
+        if (hasChart) {
+          fullMessage += ' https://dexscreener.com/';
+        }
+        
+        if (hasWebsite) {
+          fullMessage += ' https://easyshill.com/';
+        }
+        
+        if (hasX) {
+          fullMessage += ' https://x.com/easy_shill';
+        }
+        
+        // URL encode the message for use in links
+        const encodedMessage = encodeURIComponent(fullMessage);
+        
+        // Update all social media links in the image map
+        const mapAreas = document.querySelectorAll('map[name="ring-map"] area');
+        
+        mapAreas.forEach(area => {
+          const type = area.getAttribute('alt');
+          let newHref = '';
+          
+          // Update each link based on its social media type
+          switch(type) {
+            case 'pocket':
+              newHref = `https://getpocket.com/edit?url=https%3A//easyshill.com/%23how-to-buy&title=${encodedMessage}`;
+              break;
+            case 'pinterest':
+              newHref = `https://pinterest.com/pin/create/button/?url=https%3A//easyshill.com/%23how-to-buy&description=${encodedMessage}`;
+              break;
+            case 'xing':
+              newHref = `https://www.xing.com/spi/shares/new?url=https%3A//easyshill.com/%23how-to-buy&text=${encodedMessage}`;
+              break;
+            case 'messenger':
+            case 'messenger2':
+              newHref = `https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&app_id=123456789&redirect_uri=https%3A//easyshill.com/%23how-to-buy&text=${encodedMessage}`;
+              break;
+            case 'mastodon':
+              newHref = `https://mastodon.social/share?text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'whatsapp':
+              newHref = `https://api.whatsapp.com/send?text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'flipboard':
+              newHref = `https://share.flipboard.com/bookmarklet/popout?v=2&title=${encodedMessage}&url=https%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'linkedin':
+              newHref = `https://www.linkedin.com/sharing/share-offsite/?url=https%3A//easyshill.com/%23how-to-buy&summary=${encodedMessage}`;
+              break;
+            case 'sms':
+              newHref = `sms:?body=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'vk':
+              newHref = `https://vk.com/share.php?url=https%3A//easyshill.com/%23how-to-buy&title=${encodedMessage}`;
+              break;
+            case 'skype':
+              newHref = `https://web.skype.com/share?url=https%3A//easyshill.com/%23how-to-buy&text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'line':
+              newHref = `https://social-plugins.line.me/lineit/share?url=https%3A//easyshill.com/%23how-to-buy&text=${encodedMessage}`;
+              break;
+            case 'reddit':
+              newHref = `https://www.reddit.com/submit?url=https%3A//easyshill.com/%23how-to-buy&title=${encodedMessage}`;
+              break;
+            case 'gab':
+              newHref = `https://gab.com/compose?text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'twitter':
+              newHref = `https://twitter.com/intent/tweet?text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'email':
+              newHref = `mailto:?subject=${encodedMessage}&body=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            case 'facebook':
+              newHref = `https://www.facebook.com/sharer/sharer.php?u=https%3A//easyshill.com/%23how-to-buy&quote=${encodedMessage}`;
+              break;
+            case 'tumblr':
+              newHref = `https://www.tumblr.com/widgets/share/tool?canonicalUrl=https%3A//easyshill.com/%23how-to-buy&caption=${encodedMessage}`;
+              break;
+            case 'hackernews':
+              newHref = `https://news.ycombinator.com/submitlink?u=https%3A//easyshill.com/%23how-to-buy&t=${encodedMessage}`;
+              break;
+            case 'tiktok':
+              newHref = `https://www.tiktok.com/upload?text=${encodedMessage}`;
+              break;
+            case 'weibo':
+              newHref = `https://service.weibo.com/share/share.php?url=https%3A//easyshill.com/%23how-to-buy&title=${encodedMessage}`;
+              break;
+            case 'custom':
+              newHref = `https%3A//easyshill.com/%23how-to-buy&text=${encodedMessage}%0Ahttps%3A//easyshill.com/%23how-to-buy`;
+              break;
+            default:
+              // Keep the original href if type not recognized
+              newHref = area.getAttribute('href');
+          }
+          
+          // Update the href attribute
+          area.setAttribute('href', newHref);
+        });
+        
+        // Also update SVG links for consistency
+        const svgLinks = document.querySelectorAll('.links-layer svg a');
+        svgLinks.forEach(link => {
+          // Get the corresponding href from the map area with the same index
+          const index = Array.from(svgLinks).indexOf(link);
+          if (index < mapAreas.length) {
+            const newHref = mapAreas[index].getAttribute('href');
+            link.setAttribute('xlink:href', newHref);
+          }
+        });
+        
+        // Visual feedback: Flash green light
+        const redLight = document.getElementById('red-light-copy');
+        const greenLight = document.getElementById('green-light-copy');
+        
+        redLight.classList.remove('active');
+        greenLight.classList.add('active');
+        
+        // Return to red after 3 seconds
+        setTimeout(() => {
+          greenLight.classList.remove('active');
+          redLight.classList.add('active');
+        }, 3000);
+      }
     });
   </script>
 </body>

@@ -7,52 +7,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/three-moon.css">
   <style>
+    @font-face {
+      font-family: 'blocky_font';
+      src: url('font/blocky_font.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'digital-7';
+      src: url('font/digital-7.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'spacex';
+      src: url('font/spacex.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
     html, body { margin:0; padding:0; width:100%; height:auto; overflow:auto; background-color: #000; }
-    
-    /* Make sure bottom content is visible */
-    body { padding-bottom: 200px; }
-    
-    /* Top-right icon cluster */
-    .icon-cluster {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      display: flex;
-      gap: 15px;
-    }
-    
-    .icon-cluster a {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(0, 255, 127, 0.5);
-      border-radius: 50%;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(0, 255, 127, 0.3);
-    }
-    
-    .icon-cluster a:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 15px rgba(0, 255, 127, 0.6);
-      background-color: rgba(0, 20, 10, 0.7);
-    }
-    
-    .icon-cluster img {
-      width: 24px;
-      height: 24px;
-      filter: brightness(0) invert(1);
-    }
     
     /* Master Rings Layer */
     .master-rings-layer {
       position: relative;
       width: 100%;
-      z-index: 20;
+      z-index: 10;
       text-align: center;
       padding-top: 20px;
     }
@@ -69,12 +53,12 @@
     
     /* Link Overlay Layer */
     .links-layer {
-      position: relative;
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 10; /* Lower z-index than master-rings-layer */
+      z-index: 5; /* Lower z-index so the image map can work */
     }
     
     /* Make all links/areas clickable */
@@ -96,33 +80,23 @@
     .links-layer svg a {
       cursor: pointer;
     }
-    
-    /* Font faces from verify_changes.html */
-    @font-face {
-      font-family: 'blocky_font';
-      src: url('font/blocky_font.ttf') format('truetype');
-      font-weight: bold;
-      font-style: normal;
-    }
-    
-    @font-face {
-      font-family: 'digital-7';
-      src: url('font/digital-7.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-    
-    @font-face {
-      font-family: 'spacex';
-      src: url('font/spacex.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
   </style>
   <!-- jQuery and image map libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/image-map-resizer/1.0.10/js/imageMapResizer.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/imagemapster/1.5.4/jquery.imagemapster.min.js"></script>
+  
+  <!-- Three.js Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/improved-moon.js"></script>
+  <script src="js/moon-integration.js"></script>
+  
+  <script>
+    // Initialize image map responsiveness when page loads
+    $(document).ready(function() {
+      $('map').imageMapResize();
+    });
+  </script>
   
   <style>
     img#master-rings {
@@ -134,35 +108,20 @@
   </style>
 </head>
 <body>
-  <!-- Icon Cluster in Top-Right -->
-  <div class="icon-cluster">
-    <a href="https://dexscreener.com" target="_blank" title="Dexscreener">
-      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyLDJBMTAsMTAgMCAwLDAgMiwxMkExMCwxMCAwIDAsMCAxMiwyMkExMCwxMCAwIDAsMCAyMiwxMkExMCwxMCAwIDAsMCAxMiwyTTEyLDRBOCw4IDAgMCwxIDIwLDEyQTgsOCAwIDAsMSAxMiwyMEE4LDggMCAwLDEgNCwxMkE4LDggMCAwLDEgMTIsNE0xMiw2QTYsNiAwIDAsMCA2LDEyQTYsNiAwIDAsMCAxMiwxOEE2LDYgMCAwLDAgMTgsMTJBNiw2IDAgMCwwIDEyLDZNMTIsOEE0LDQgMCAwLDEgMTYsMTJBNCw0IDAgMCwxIDEyLDE2QTQsNCAwIDAsMSA4LDEyQTQsNCAwIDAsMSAxMiw4WiIgLz48L3N2Zz4=" alt="Dexscreener">
-    </a>
-    <a href="https://twitter.com" target="_blank" title="Twitter">
-      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTIyLjQ2LDZDMjEuNjksNi4zNSAyMC44Niw2LjU4IDIwLDYuNjlDMjAuODgsNi4xNiAyMS41Niw1LjMyIDIxLjg4LDQuMzFDMjEuMDUsNC44MSAyMC4xMyw1LjE2IDE5LjE2LDUuMzZDMTguMzcsNC41IDE3LjI2LDQgMTYsNEMxMy42NSw0IDExLjczLDUuOTIgMTEuNzMsOC4yOUMxMS43Myw4LjYzIDExLjc3LDguOTYgMTEuODQsOS4yN0M4LjI4LDkuMDkgNS4xMSw3LjM4IDMsNC43OUMyLjYzLDUuNDIgMi40Miw2LjE2IDIuNDIsNi45NEMyLjQyLDguNDMgMy4xNyw5Ljc1IDQuMzMsMTAuNUMzLjYyLDEwLjUgMi45NiwxMC4zIDIuMzgsMTBDMi4zOCwxMCAyLjM4LDEwIDIuMzgsMTAuMDNDMi4zOCwxMi4xMSAzLjg2LDEzLjg1IDUuODIsMTQuMjRDNS40NiwxNC4zNCA1LjA4LDE0LjM5IDQuNjksMTQuMzlDNC40MiwxNC4zOSA0LjE1LDE0LjM2IDMuODksMTQuMzFDNC40MywxNiA2LDE3LjI2IDcuODksMTcuMjlDNi40MywxOC40NSA0LjU4LDE5LjEzIDIuNTYsMTkuMTNDMi4yMiwxOS4xMyAxLjg4LDE5LjExIDEuNTQsMTkuMDdDMy40NCwyMC4yOSA1LjcsMjEgOC4xMiwyMUMxNiwwLjAzIDIwLDIxIDIwLDIxQzIwLDIwLjIxIDIwLDIwLjE5IDIwLDIwQzIwLDIwIDIwLDE1IDE2LDBDMTcuMzMsMCAxOC41MiwxMi44OSAyMC4wNywxMy44NkMyMC44OCwxMy4xNSAyMS43NCwxMi4yOCAyMi40NiwxMS4yOUMyMS43NSwxMi4yNSAyMC44OCwxMy4xMyAyMC4wNywxMy44NkMxOCwxMi43IDE4LDEwIDE4LDEwIiBmaWxsPSIjMDAwIi8+PC9zdmc+" alt="Twitter">
-    </a>
-    <a href="https://t.me" target="_blank" title="Telegram">
-      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTkuNzgsMTguNjVMMTAuMDYsMTQuNzJMMTcuNzUsOC41MkMxOC4wOCw4LjE5IDE3LjY3LDguMDQgMTcuMjIsOC4zMUw3LjM0LDEzLjk3TDMuNTQsMTIuODFDMi43LDEyLjU3IDIuNjYsMTEuOTUgMy43MSwxMS41M0wxOS4yOSw2LjdDMjAuMDksNi4zNyAyMC44OSw2Ljg5IDIwLjQ1LDdMMjAuNjIsMTIuNTNMMTcuNzUsMTYuMzlMMTMuOTEsMTguOTFMMTIuOTEsMTguNjVaIiBmaWxsPSIjMDAwIi8+PC9zdmc+" alt="Telegram">
-    </a>
-    <a href="https://solscan.io" target="_blank" title="Solscan">
-      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyLDFMMSw1VjExQzEsMTYuNTUgNS44NCwyMS43NCAxMiwyM0MxOC4xNiwyMS43NCAyMywxNi41NSAyMywxMVY1TDEyLDFNMTIsNUMyLDYgMywyMiAzLDIyQzMsMjIgMTAsMjEgMTIsMjFDMTQsMjEgMjEsMjIgMjEsMjJDMjEsMjIgMjIsNiAxMiw1TTEyLDdDMTYuNDgsNyAxNy44NywxNCAxNy44NywxNEgxNS4yQzE1LjIsMTQgMTQuMjUsMTAgMTIsMTBDOS43NSwxMCA4LjgsMTQgOC44LDE0SDYuMTNDNi4xMywxNCAxLjUyLDcgMTIsN00xMiwxMkMxMy4zMywxMiAxNCwxMy42NyAxNCwxMy42N0gxMFYxNS4zM0gxNEMxNCwxNS4zMyAxMy4zMywxNyAxMiwxN0MxMC42NywxNyAxMCwxNS4zMyAxMCwxNS4zM0g4QzgsMTUuMzMgOS4zMywxOSAxMiwxOUMxNC42NywxOSAxNiwxNS4zMyAxNiwxNS4zM1YxMy42N0MxNiwxMy42NyAxNC42NywxMCAxMiwxMFY2IiBmaWxsPSIjMDAwIi8+PC9zdmc+" alt="Solscan">
-    </a>
+  <!-- 3D Moon Container using Three.js -->
+  <div id="moon-3d-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: 7; pointer-events: none;"></div>
+
+  <!-- Attention Trench Mercenaries Section -->
+  <div style="text-align: center; margin: 40px 0 20px; font-family: 'blocky_font', sans-serif; color: #ff0000; font-size: 48px; font-weight: bold; text-shadow: 0 0 15px rgba(255,0,0,0.8); letter-spacing: 2px;">
+    !!ATTENTION TRENCH MERCENARIES!!
   </div>
 
-  <!-- 3D Moon Container using Three.js -->
-  <div id="moon-3d-container" style="z-index: 5; position: absolute; pointer-events: none; top: 0; left: 0; width: 100%; height: 100vh;"></div>
-  
-  <!-- Master Rings Layer - Only keep the top single set as shown in mockup.png -->
+  <!-- Master Rings Layer -->
   <div class="master-rings-layer">
     <img src="allrings.png" id="master-rings" usemap="#ring-map" alt="Master Rings" />
     <div style="text-align: center; margin: 20px 0; font-family: 'digital-7', monospace; color: white; font-size: 24px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,255,255,0.5);">
       ENJOY A FULL ARRAY OF PRE-FILLED SHILL LINKS FOR YOUR CONVENIENCE
     </div>
-    
-    <!-- Visual separator -->
-    <div style="width: 80%; height: 3px; margin: 40px auto; background: linear-gradient(to right, rgba(0,255,127,0), rgba(0,255,127,0.8), rgba(0,255,127,0)); box-shadow: 0 0 10px rgba(0,255,127,0.5);"></div>
-    
     <map name="ring-map">
       <area alt="pocket" coords="1173,132,127" shape="circle" href="https://getpocket.com/edit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time" />
       <area alt="pinterest" coords="636,140,116" shape="circle" href="https://pinterest.com/pin/create/button/?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;description=Easiest%20shill%20of%20all%20time" />
@@ -190,84 +149,315 @@
     </map>
   </div>
   
+  <!-- Old Link Overlay Layer removed -->
+
   <!-- Add a full-width black background div beneath the image -->
-  <div style="width: 100%; background: black; padding-top: 20px;"></div>
+  <div style="width: 100%; height: 400px; background: black;"></div>
   
-  <!-- Content from verify_changes.html -->
-  <section style="width: 100%; background-color: #000000; padding: 20px 0; position: relative; z-index: 10; margin-bottom: 50px;">
-    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
-      <div class="section">
-        <div class="two-column" style="display: flex; flex-wrap: wrap;">
-          <!-- Left column - What is a marketing-first token -->
-          <div class="column" style="flex: 1; min-width: 300px; padding: 20px;">
-            <h2 class="green" style="font-family: 'digital-7', monospace; text-align: center; color: #00ff7f; font-size: 32px; margin-bottom: 20px; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,255,127,0.8);">WHAT IS A MARKETING-FIRST TOKEN?</h2>
-            <p class="white" style="font-family: 'blocky_font', sans-serif; color: white; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
-              Marketing-first means we put shilling, brand awareness, and market share over everything else. We're not about the memes, we're about the money. We recognize that a community exists to mobilize and we are mightier together than apart.
-            </p>
-          </div>
-          
-          <!-- Right column - How will EasyShill hit $100M MC -->
-          <div class="column" style="flex: 1; min-width: 300px; padding: 20px;">
-            <h2 class="green" style="font-family: 'digital-7', monospace; text-align: center; color: #00ff7f; font-size: 32px; margin-bottom: 20px; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,255,127,0.8);">HOW WILL EASYSHILL HIT $100M MC?</h2>
-            <p class="white" style="font-family: 'blocky_font', sans-serif; color: white; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
-              Through an all-star line-up of marketers (see below), and a blend of traditional, guerrilla, and viral marketing tactics. We will announce our A few minutes after launch. We're so confident in EasyShill our success that we've launched without influencers.
-            </p>
-          </div>
-        </div>
-        
-        <!-- War zone battle sentence -->
-        <div class="battle-text" style="font-family: 'blocky_font', sans-serif; color: white; font-size: 28px; font-weight: bold; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255,255,255,0.6); text-align: center; margin: 30px 0;">
-          The space is a warzone, and we came to do battle. Stop fighting for scraps in the trenches; enlist with the best of the best and let's win the war.
-        </div>
-        
-        <!-- Who's behind EasyShill heading -->
-        <div class="team-heading" style="text-align: center; margin: 40px 0 20px;">
-          <h2 style="font-family: 'blocky_font', sans-serif; font-size: 42px; font-weight: bold; letter-spacing: 2px; margin: 0;">
-            <span class="green" style="color: #00ff7f; text-shadow: 0 0 15px rgba(0,255,127,0.8);">WHO'S BEHIND </span>
-            <span class="violet" style="color: #ee82ee; text-shadow: 0 0 15px rgba(238,130,238,0.8);">EASYSHILL?</span>
-          </h2>
-        </div>
-        
-        <!-- Team member section -->
-        <div class="team-members" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-          <!-- Team Member 1 - DragoR -->
-          <div class="team-member" style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
-            <img src="1.png" alt="DragoR" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
-            <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6);">DragoR</h3>
-            <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
-              Dragor is an OG marketing guru. He's had many names, but his work all carries a signature of excellence. Dragor led the infamous Chainlink–4chan campaign during Bull '21. It's considered one of the best grassroots campaigns ever launched.
-            </p>
-          </div>
-          
-          <!-- Team Member 2 - Boudica -->
-          <div class="team-member" style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
-            <img src="2.png" alt="Boudica" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
-            <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6);">Boudica</h3>
-            <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
-              Boudica's thrown up staggering numbers on everything he's touched, but his claim to fame is being the driving catalyst behind the Kitty Inu pump from $1.2m to $200m market cap.
-            </p>
-          </div>
-          
-          <!-- Team Member 3 - JourneyComes -->
-          <div class="team-member" style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
-            <img src="3.png" alt="JourneyComes" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
-            <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6);">JourneyComes</h3>
-            <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
-              JourneyComes has worked with Floyd Mayweather, Reese Witherspoon, and more, but before her star-studded journey came, her efforts helped cement $CULT as first mover for the '22–'23 Ryoshi craze.
-            </p>
-          </div>
-        </div>
+  <!-- Initialization for the enhanced 3D moon happens in moon-integration.js -->
+
+  <!-- Marketing text blocks under Attention heading -->
+  <section style="width: 100%; background-color: #000000; padding: 40px 0;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap;">
+      <!-- Left column - What is a marketing-first token -->
+      <div style="flex: 1; min-width: 300px; padding: 20px; color: #fff; text-align: center;">
+        <h2 style="font-family: 'digital-7', monospace; color: #00ff7f; font-size: 32px; margin-bottom: 20px; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,255,127,0.8);">
+          WHAT IS A MARKETING-FIRST TOKEN?
+        </h2>
+        <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 18px; line-height: 1.6; margin-bottom: 15px; text-align: left;">
+          A marketing-first token prioritizes building hype and community engagement before anything else. While other projects focus on technology or utility that nobody uses, we focus on what actually matters in this market: ATTENTION. By mastering the art of viral marketing and social engagement, EasyShill creates exponential growth and FOMO from day one.
+        </p>
+      </div>
+      
+      <!-- Right column - How will EasyShill hit $100M MC -->
+      <div style="flex: 1; min-width: 300px; padding: 20px; color: #fff; text-align: center;">
+        <h2 style="font-family: 'digital-7', monospace; color: #00ff7f; font-size: 32px; margin-bottom: 20px; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,255,127,0.8);">
+          HOW WILL EASYSHILL HIT $100M MC?
+        </h2>
+        <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 18px; line-height: 1.6; margin-bottom: 15px; text-align: left;">
+          By leveraging our innovative shill tools and battle-tested marketing strategies, we'll rapidly expand our reach across all social platforms. Our community-driven approach creates a self-perpetuating cycle where holders are incentivized to promote the token, creating a viral effect that traditional marketing can't achieve. When holders become marketers, growth becomes inevitable.
+        </p>
+      </div>
+    </div>
+    
+    <!-- War zone battle sentence -->
+    <div style="width: 100%; text-align: center; padding: 30px 0;">
+      <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 32px; font-weight: bold; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255,255,255,0.6); margin: 0 auto; max-width: 90%;">
+        THE SPACE IS A WARZONE, AND WE CAME TO DO BATTLE...
+      </p>
+    </div>
+    
+    <!-- Who's behind EasyShill heading -->
+    <div style="width: 100%; text-align: center; padding: 40px 0 20px;">
+      <h2 style="font-family: 'blocky_font', sans-serif; font-size: 42px; font-weight: bold; letter-spacing: 2px; margin: 0;">
+        <span style="color: #00ff7f; text-shadow: 0 0 15px rgba(0,255,127,0.8);">WHO'S BEHIND </span>
+        <span style="color: #ee82ee; text-shadow: 0 0 15px rgba(238,130,238,0.8);">EASYSHILL?</span>
+      </h2>
+    </div>
+    
+    <!-- Team member section -->
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; padding: 20px 0 40px;">
+      <!-- Team Member 1 - DragoR -->
+      <div style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
+        <img src="1.png" alt="DragoR" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
+        <h3 style="font-family: 'blocky_font', sans-serif; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6); letter-spacing: 1px;">
+          DragoR
+        </h3>
+        <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
+          Marketing mastermind with 7+ years in crypto. Launched multiple 7 and 8-figure projects and specializes in creating viral campaigns that generate unstoppable momentum. His network spans every corner of the crypto space, from influencers to whales who move markets.
+        </p>
+      </div>
+      
+      <!-- Team Member 2 - Boudica -->
+      <div style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
+        <img src="2.png" alt="Boudica" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
+        <h3 style="font-family: 'blocky_font', sans-serif; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6); letter-spacing: 1px;">
+          Boudica
+        </h3>
+        <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
+          Community builder extraordinaire who transforms casual interest into die-hard loyalty. Her background in psychology and social engineering creates engagement strategies that keep communities fired up and actively promoting. She's built communities from zero to tens of thousands in record time.
+        </p>
+      </div>
+      
+      <!-- Team Member 3 - JourneyComes -->
+      <div style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
+        <img src="3.png" alt="JourneyComes" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
+        <h3 style="font-family: 'blocky_font', sans-serif; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6); letter-spacing: 1px;">
+          JourneyComes
+        </h3>
+        <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
+          Development wizard and tokenomics specialist who ensures EasyShill's infrastructure is bulletproof. With expertise in smart contract security and a background in financial markets, he creates token mechanisms that align incentives and drive long-term value creation.
+        </p>
       </div>
     </div>
   </section>
   
-  <!-- JavaScript for initializing and resizing image maps -->
+  <!-- Pumpswap Widget section -->
+  <section style="width: 100%; background-color: #000000; padding: 40px 0;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap;">
+      <!-- Left column with additional content -->
+      <div style="flex: 1; min-width: 300px; padding: 20px; color: #fff;">
+        <h2>About EasyShill</h2>
+        <p>EasyShill revolutionizes how crypto projects market themselves through innovative tools and strategies. Our platform provides everything needed to create viral marketing campaigns that generate real momentum in the market.</p>
+        <p>With our team's expertise and battle-tested approach, we're positioned to become the go-to solution for projects looking to break through the noise and capture market attention.</p>
+      </div>
+      
+      <!-- Right column with Pumpswap widget -->
+      <div style="flex: 1; min-width: 300px; padding: 20px; color: #fff;">
+        <h2>Pumpswap Widget</h2>
+        <div id="pumpswap-widget" style="background-color: #1a1a1a; border-radius: 10px; padding: 20px; min-height: 300px;">
+          <!-- Pumpswap Widget Implementation -->
+          <script>
+            // Load Pumpswap SDK
+            (function() {
+              const script = document.createElement('script');
+              script.src = 'https://unpkg.com/@pump-fun/pump-swap-sdk@latest/dist/index.js';
+              script.async = true;
+              script.onload = function() {
+                // Initialize Pumpswap widget once SDK is loaded
+                if (window.PumpAmmSdk) {
+                  try {
+                    const pumpWidget = document.createElement('div');
+                    pumpWidget.id = 'pump-widget-container';
+                    pumpWidget.style.width = '100%';
+                    pumpWidget.style.height = '300px';
+                    pumpWidget.innerHTML = '<p style="color: #fff; text-align: center; padding-top: 120px;">Loading Pumpswap Widget...</p>';
+                    document.getElementById('pumpswap-widget').appendChild(pumpWidget);
+                    
+                    // Initialize the SDK (placeholder implementation)
+                    const pumpAmmSdk = new window.PumpAmmSdk();
+                    
+                    // This is a placeholder - the actual implementation would depend on the proper SDK documentation
+                    // Real implementation would initialize the widget here
+                  } catch (error) {
+                    console.error('Failed to initialize Pumpswap widget:', error);
+                    document.getElementById('pumpswap-widget').innerHTML = 
+                      '<p style="color: #ff6b6b; text-align: center;">Could not load Pumpswap widget. Please visit <a href="https://pump.fun" style="color: #4dabf7;">pump.fun</a> directly.</p>';
+                  }
+                } else {
+                  console.error('Pumpswap SDK not available');
+                  document.getElementById('pumpswap-widget').innerHTML = 
+                    '<p style="color: #ff6b6b; text-align: center;">Could not load Pumpswap widget. Please visit <a href="https://pump.fun" style="color: #4dabf7;">pump.fun</a> directly.</p>';
+                }
+              };
+              document.head.appendChild(script);
+            })();
+          </script>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script>
-    // Initialize and resize image maps when document is ready
-    $(document).ready(function() {
-      $('map').imageMapResize();
-    });
+    window.onload = function() {
+      // Get the SVG element
+      const svg = document.querySelector('.links-layer svg');
+      
+      // Create a group for orbital dots at the end of the SVG (so they're on top)
+      const orbitalDotsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      orbitalDotsGroup.setAttribute('id', 'orbital-dots-group');
+      svg.appendChild(orbitalDotsGroup);
+      
+      // Make the rect elements transparent but still clickable
+      const svgRects = document.querySelectorAll('.links-layer svg a rect');
+      svgRects.forEach(rect => {
+        rect.setAttribute('fill', 'rgba(255, 255, 255, 0)');
+        rect.setAttribute('stroke', 'transparent');
+        
+        // Add orbital dots hover effect
+        const linkElement = rect.parentElement;
+        addOrbitalDotsEffect(linkElement, rect, orbitalDotsGroup);
+      });
+    };
+    
+    // Function to add orbital dots hover effect
+    function addOrbitalDotsEffect(linkElement, rect, dotsContainer) {
+      // Get dimensions of the rectangle for positioning
+      const rectWidth = parseFloat(rect.getAttribute('width'));
+      const rectHeight = parseFloat(rect.getAttribute('height'));
+      const rectX = parseFloat(rect.getAttribute('x'));
+      const rectY = parseFloat(rect.getAttribute('y'));
+      
+      // Calculate center position
+      const cx = rectX + (rectWidth / 2);
+      const cy = rectY + (rectHeight / 2);
+      
+      // Calculate radius for orbit (10px larger than icon)
+      const iconSize = Math.min(rectWidth, rectHeight) / 2;
+      const orbitRadius = iconSize + 10;
+      
+      // Create an orbit group for this specific icon
+      const orbitGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      orbitGroup.setAttribute('class', 'orbit-group');
+      orbitGroup.style.display = 'none'; // Initially hidden
+      dotsContainer.appendChild(orbitGroup);
+      
+      // Store animation info
+      let animationFrameId = null;
+      let dotInfos = [];
+      
+      // Create the 3 orbital dots in advance
+      for (let i = 0; i < 3; i++) {
+        // Create dot
+        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        dot.setAttribute('r', 3); // 6px diameter (increased from 4px)
+        
+        // Alternate between seafoam green and violet colors
+        const colors = ['#7FFFD4', '#EE82EE']; // Seafoam green and violet
+        const colorIndex = i % 2; // Alternates between 0 and 1
+        const dotColor = colors[colorIndex];
+        
+        // Increased opacity to 0.8
+        dot.setAttribute('fill', dotColor);
+        dot.setAttribute('opacity', '0.8');
+        
+        // Stronger glow effect
+        dot.setAttribute('filter', 'drop-shadow(0 0 4px ' + dotColor + ') drop-shadow(0 0 2px rgba(255, 255, 255, 0.6))');
+        
+        // Add to the orbit group
+        orbitGroup.appendChild(dot);
+        
+        // Random starting angle
+        const startAngle = Math.random() * Math.PI * 2;
+        
+        // Random orbit speed (1.8s-2.5s per orbit)
+        const orbitalPeriod = (1800 + Math.random() * 700); // ms
+        const angularVelocity = (Math.PI * 2) / orbitalPeriod; // radians per ms
+        
+        // Store dot info
+        dotInfos.push({
+          element: dot,
+          angle: startAngle,
+          velocity: angularVelocity,
+          color: dotColor
+        });
+        
+        // Initial position
+        updateDotPosition(dotInfos[i], cx, cy, orbitRadius);
+      }
+      
+      // Function to update dot positions
+      function updateDotsPositions(timestamp) {
+        // Calculate elapsed time
+        const elapsed = timestamp - lastTimestamp;
+        lastTimestamp = timestamp;
+        
+        // Update each dot position
+        for (const dotInfo of dotInfos) {
+          // Update angle based on angular velocity and elapsed time
+          dotInfo.angle += dotInfo.velocity * elapsed;
+          
+          // Normalize angle to keep it in the 0-2π range
+          if (dotInfo.angle > Math.PI * 2) {
+            dotInfo.angle -= Math.PI * 2;
+          }
+          
+          // Update position
+          updateDotPosition(dotInfo, cx, cy, orbitRadius);
+        }
+        
+        // Continue animation
+        animationFrameId = requestAnimationFrame(updateDotsPositions);
+      }
+      
+      // Helper function to update a dot's position
+      function updateDotPosition(dotInfo, centerX, centerY, radius) {
+        const x = centerX + Math.cos(dotInfo.angle) * radius;
+        const y = centerY + Math.sin(dotInfo.angle) * radius;
+        dotInfo.element.setAttribute('cx', x);
+        dotInfo.element.setAttribute('cy', y);
+      }
+      
+      let lastTimestamp;
+      
+      // Add mouseenter event
+      linkElement.addEventListener('mouseenter', () => {
+        // Show the orbit group
+        orbitGroup.style.display = 'block';
+        orbitGroup.style.opacity = '1';
+        
+        // Start animation loop
+        lastTimestamp = performance.now();
+        animationFrameId = requestAnimationFrame(updateDotsPositions);
+      });
+      
+      // Prevent instant navigation to allow seeing the hover effect
+      linkElement.addEventListener('click', (event) => {
+        // Prevent default navigation
+        event.preventDefault();
+        
+        // Store the href to navigate to
+        const href = linkElement.getAttribute('xlink:href');
+        
+        // Wait 1 second to show the effect, then navigate
+        setTimeout(() => {
+          window.location.href = href;
+        }, 1000);
+      });
+      
+      // Add mouseleave event
+      linkElement.addEventListener('mouseleave', () => {
+        // Stop animation
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
+        }
+        
+        // Fade out orbit group
+        orbitGroup.style.transition = 'opacity 0.5s ease-out';
+        orbitGroup.style.opacity = '0';
+        
+        // Hide after fade out completes
+        setTimeout(() => {
+          orbitGroup.style.display = 'none';
+        }, 500);
+      });
+    }
   </script>
+
+  <!-- Three.js Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="background.js"></script>
 
   <!-- Bottom Sheet -->
   <div id="bottom-sheet">
@@ -868,32 +1058,185 @@
     });
   </script>
   
-  <!-- Marketing Schedule Section -->
-  <section style="position: relative; z-index: 20; width: 100%; background-color: rgba(0,0,0,0.7); margin-top: 50px; padding: 30px 0; border-top: 1px solid rgba(0,255,127,0.3); box-shadow: 0 -5px 15px rgba(0,0,0,0.5);">
-    <div style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
-      <h2 style="font-family: 'digital-7', monospace; text-align: center; color: #00ff7f; font-size: 36px; margin-bottom: 30px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,255,127,0.8);">MARKETING SCHEDULE</h2>
-      
-      <div style="display: flex; margin-bottom: 15px; align-items: center;">
-        <div style="width: 150px; font-family: 'blocky_font', sans-serif; color: #fff; font-size: 18px; font-weight: bold; text-shadow: 0 0 5px rgba(255,255,255,0.5);">April 30</div>
-        <div style="height: 1px; flex-grow: 0; width: 30px; background: linear-gradient(to right, rgba(0,255,127,0), rgba(0,255,127,1))"></div>
-        <div style="flex-grow: 1; font-family: 'blocky_font', sans-serif; color: #fff; font-size: 18px; padding-left: 20px;">Billboards Across All 50 States</div>
-      </div>
-      
-      <div style="display: flex; margin-bottom: 15px; align-items: center;">
-        <div style="width: 150px; font-family: 'blocky_font', sans-serif; color: #fff; font-size: 18px; font-weight: bold; text-shadow: 0 0 5px rgba(255,255,255,0.5);">May 1</div>
-        <div style="height: 1px; flex-grow: 0; width: 30px; background: linear-gradient(to right, rgba(0,255,127,0), rgba(0,255,127,1))"></div>
-        <div style="flex-grow: 1; font-family: 'blocky_font', sans-serif; color: #fff; font-size: 18px; padding-left: 20px;">Flyover at Token2049 – Dubai</div>
-      </div>
-      
-      <div style="text-align: center; margin-top: 30px; font-family: 'digital-7', monospace; color: #ff5555; font-size: 24px; letter-spacing: 3px; text-shadow: 0 0 10px rgba(255,0,0,0.5);">
-        COMING SOON
-      </div>
-    </div>
+  <!-- Content from verify_changes.html starts here -->
+  <div class="container">
+    <h1>EasyShill - Verifying Changes</h1>
     
-    <!-- Footer -->
-    <div style="text-align: center; margin-top: 40px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); font-family: 'digital-7', monospace; color: rgba(255,255,255,0.5); font-size: 14px;">
-      © EasyShill. All Rights Reserved.
+    <div class="section">
+      <div class="two-column">
+        <!-- Left column - What is a marketing-first token -->
+        <div class="column">
+          <h2 class="green" style="font-family: 'digital-7', monospace; text-align: center;">WHAT IS A MARKETING-FIRST TOKEN?</h2>
+          <p class="white">
+            Marketing-first means we put shilling, brand awareness, and market share over everything else. We're not about the memes, we're about the money. We recognize that a community exists to mobilize and we are mightier together than apart.
+          </p>
+        </div>
+        
+        <!-- Right column - How will EasyShill hit $100M MC -->
+        <div class="column">
+          <h2 class="green" style="font-family: 'digital-7', monospace; text-align: center;">HOW WILL EASYSHILL HIT $100M MC?</h2>
+          <p class="white">
+            Through an all-star line-up of marketers (see below), and a blend of traditional, guerrilla, and viral marketing tactics. We will announce our A few minutes after launch. We're so confident in EasyShill our success that we've launched without influencers.
+          </p>
+        </div>
+      </div>
+      
+      <!-- War zone battle sentence -->
+      <div class="battle-text">
+        The space is a warzone, and we came to do battle. Stop fighting for scraps in the trenches; enlist with the best of the best and let's win the war.
+      </div>
+      
+      <!-- Who's behind EasyShill heading -->
+      <div class="team-heading">
+        <h2>
+          <span class="green">WHO'S BEHIND </span>
+          <span class="violet">EASYSHILL?</span>
+        </h2>
+      </div>
+      
+      <!-- Team member section -->
+      <div class="team-members">
+        <!-- Team Member 1 - DragoR -->
+        <div class="team-member">
+          <img src="1.png" alt="DragoR">
+          <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px;">DragoR</h3>
+          <p>
+            Dragor is an OG marketing guru. He's had many names, but his work all carries a signature of excellence. Dragor led the infamous Chainlink–4chan campaign during Bull '21. It's considered one of the best grassroots campaigns ever launched.
+          </p>
+        </div>
+        
+        <!-- Team Member 2 - Boudica -->
+        <div class="team-member">
+          <img src="2.png" alt="Boudica">
+          <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px;">Boudica</h3>
+          <p>
+            Boudica's thrown up staggering numbers on everything he's touched, but his claim to fame is being the driving catalyst behind the Kitty Inu pump from $1.2m to $200m market cap.
+          </p>
+        </div>
+        
+        <!-- Team Member 3 - JourneyComes -->
+        <div class="team-member">
+          <img src="3.png" alt="JourneyComes">
+          <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px;">JourneyComes</h3>
+          <p>
+            JourneyComes has worked with Floyd Mayweather, Reese Witherspoon, and more, but before her star-studded journey came, her efforts helped cement $CULT as first mover for the '22–'23 Ryoshi craze.
+          </p>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+  <!-- Content from verify_changes.html ends here -->
+
+  <style>
+    /* Styles from verify_changes.html */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .section {
+      margin-bottom: 40px;
+    }
+    
+    .two-column {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    .column {
+      flex: 1;
+      min-width: 300px;
+      padding: 20px;
+    }
+    
+    h2.green {
+      font-family: 'blocky_font', sans-serif;
+      color: #00ff7f;
+      font-size: 32px;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(0,255,127,0.8);
+    }
+    
+    p.white {
+      font-family: 'blocky_font', sans-serif;
+      color: white;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .battle-text {
+      font-family: 'blocky_font', sans-serif;
+      color: white;
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px rgba(255,255,255,0.6);
+      text-align: center;
+      margin: 40px 0;
+    }
+    
+    .team-heading {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+    
+    .team-heading h2 {
+      font-family: 'blocky_font', sans-serif;
+      font-size: 42px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin: 0;
+    }
+    
+    .team-heading .green {
+      color: #00ff7f;
+      text-shadow: 0 0 15px rgba(0,255,127,0.8);
+    }
+    
+    .team-heading .violet {
+      color: #ee82ee;
+      text-shadow: 0 0 15px rgba(238,130,238,0.8);
+    }
+    
+    .team-members {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    
+    .team-member {
+      flex: 1;
+      min-width: 300px;
+      max-width: 350px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .team-member img {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .team-member h3 {
+      font-family: 'blocky_font', sans-serif;
+      color: #00ff7f;
+      font-size: 28px;
+      margin: 10px 0;
+      text-shadow: 0 0 10px rgba(0,255,127,0.6);
+    }
+    
+    .team-member p {
+      font-family: 'blocky_font', sans-serif;
+      color: white;
+      font-size: 16px;
+      line-height: 1.5;
+      text-align: center;
+    }
+  </style>
 </body>
 </html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Master Rings with 3D Background</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin:0; padding:0; width:100%; height:auto; overflow:auto; background-color: #000; }
+    
+    /* Make sure bottom content is visible */
+    body { padding-bottom: 200px; }
+    
+    /* Master Rings Layer */
+    .master-rings-layer {
+      position: relative;
+      width: 100%;
+      z-index: 20;
+      text-align: center;
+      padding-top: 20px;
+    }
+    
+    .master-rings-layer map {
+      display: inline-block;
+    }
+    
+    /* Make sure image map areas are clickable */
+    .master-rings-layer area {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    
+    /* Link Overlay Layer */
+    .links-layer {
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10; /* Lower z-index than master-rings-layer */
+    }
+    
+    /* Make all links/areas clickable */
+    .links-layer map area {
+      pointer-events: auto;
+    }
+
+    /* Orbital Dots Animation */
+    @keyframes fadeOut {
+      0% {
+        opacity: 0.6;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+    
+    /* Add cursor pointer to all clickable areas */
+    .links-layer svg a {
+      cursor: pointer;
+    }
+    
+    /* Font faces from verify_changes.html */
+    @font-face {
+      font-family: 'blocky_font';
+      src: url('font/blocky_font.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'digital-7';
+      src: url('font/digital-7.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'spacex';
+      src: url('font/spacex.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
+  <!-- jQuery and image map libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/image-map-resizer/1.0.10/js/imageMapResizer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/imagemapster/1.5.4/jquery.imagemapster.min.js"></script>
+  
+  <style>
+    img#master-rings {
+      max-width: 60%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- 3D Moon Container using Three.js -->
+  <div id="moon-3d-container" style="z-index: 5; position: absolute; pointer-events: none; top: 0; left: 0; width: 100%; height: 100vh;"></div>
+  
+  <!-- Master Rings Layer - Only keep the top single set as shown in mockup.png -->
+  <div class="master-rings-layer">
+    <img src="allrings.png" id="master-rings" usemap="#ring-map" alt="Master Rings" />
+    <div style="text-align: center; margin: 20px 0; font-family: 'digital-7', monospace; color: white; font-size: 24px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,255,255,0.5);">
+      ENJOY A FULL ARRAY OF PRE-FILLED SHILL LINKS FOR YOUR CONVENIENCE
+    </div>
+    <map name="ring-map">
+      <area alt="pocket" coords="1173,132,127" shape="circle" href="https://getpocket.com/edit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time" />
+      <area alt="pinterest" coords="636,140,116" shape="circle" href="https://pinterest.com/pin/create/button/?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;description=Easiest%20shill%20of%20all%20time" />
+      <area alt="xing" coords="289,437,109" shape="circle" href="https://www.xing.com/spi/shares/new?url=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="messenger" coords="153,886,111" shape="circle" href="https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&amp;amp;app_id=123456789&amp;amp;redirect_uri=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="mastodon" coords="318,1357,100" shape="circle" href="https://mastodon.social/share?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="whatsapp" coords="465,711,115" shape="circle" href="https://api.whatsapp.com/send?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="flipboard" coords="754,1140,76" shape="circle" href="https://share.flipboard.com/bookmarklet/popout?v=2&amp;amp;title=Easiest%20shill%20of%20all%20time&amp;amp;url=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="linkedin" coords="1076,1123,74" shape="circle" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="sms" coords="1189,898,57" shape="circle" href="sms:?body=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="vk" coords="1059,662,61" shape="circle" href="https://vk.com/share.php?url=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="skype" coords="614,896,64" shape="circle" href="https://web.skype.com/share?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="line" coords="743,659,54" shape="circle" href="https://social-plugins.line.me/lineit/share?url=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="reddit" coords="1327,1179,103" shape="circle" href="https://www.reddit.com/submit?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time" />
+      <area alt="gab" coords="1396,755,98" shape="circle" href="https://gab.com/compose?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="twitter" coords="1569,405,89" shape="circle" href="https://twitter.com/intent/tweet?text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="email" coords="1156,462,96" shape="circle" href="mailto:?subject=Easiest%20shill%20of%20all%20time&amp;amp;body=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="facebook" coords="725,431,119" shape="circle" href="https://www.facebook.com/sharer/sharer.php?u=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="custom" coords="687,1641,113" shape="circle" href="https%3A//easyshill.com/%23how-to-buy&amp;amp;text=Easiest%20shill%20of%20all%20time%3A%0Ahttps%3A//easyshill.com/%23how-to-buy" />
+      <area alt="tumblr" coords="512,1155,120" shape="circle" href="https://www.tumblr.com/widgets/share/tool?canonicalUrl=https%3A//easyshill.com/%23how-to-buy&amp;amp;caption=Easiest%20shill%20of%20all%20time" />
+      <area alt="messenger2" coords="937,1409,105" shape="circle" href="https://www.facebook.com/dialog/send?link=https%3A//easyshill.com/%23how-to-buy&amp;amp;app_id=123456789&amp;amp;redirect_uri=https%3A//easyshill.com/%23how-to-buy" />
+      <area alt="hackernews" coords="1703,844,97" shape="circle" href="https://news.ycombinator.com/submitlink?u=https%3A//easyshill.com/%23how-to-buy&amp;amp;t=Easiest%20shill%20of%20all%20time" />
+      <area alt="tiktok" coords="1253,1610,99" shape="circle" href="https://www.tiktok.com/upload" />
+      <area alt="weibo" coords="1580,1321,126" shape="circle" href="https://service.weibo.com/share/share.php?url=https%3A//easyshill.com/%23how-to-buy&amp;amp;title=Easiest%20shill%20of%20all%20time" />
+    </map>
+  </div>
+  
+  <!-- Add a full-width black background div beneath the image -->
+  <div style="width: 100%; background: black; padding-top: 20px;"></div>
+  
+  <!-- Content from verify_changes.html -->
+  <section style="width: 100%; background-color: #000000; padding: 20px 0; position: relative; z-index: 10; margin-bottom: 50px;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+      <div class="section">
+        <div class="two-column" style="display: flex; flex-wrap: wrap;">
+          <!-- Left column - What is a marketing-first token -->
+          <div class="column" style="flex: 1; min-width: 300px; padding: 20px;">
+            <h2 class="green" style="font-family: 'digital-7', monospace; text-align: center; color: #00ff7f; font-size: 32px; margin-bottom: 20px; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,255,127,0.8);">WHAT IS A MARKETING-FIRST TOKEN?</h2>
+            <p class="white" style="font-family: 'blocky_font', sans-serif; color: white; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+              Marketing-first means we put shilling, brand awareness, and market share over everything else. We're not about the memes, we're about the money. We recognize that a community exists to mobilize and we are mightier together than apart.
+            </p>
+          </div>
+          
+          <!-- Right column - How will EasyShill hit $100M MC -->
+          <div class="column" style="flex: 1; min-width: 300px; padding: 20px;">
+            <h2 class="green" style="font-family: 'digital-7', monospace; text-align: center; color: #00ff7f; font-size: 32px; margin-bottom: 20px; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,255,127,0.8);">HOW WILL EASYSHILL HIT $100M MC?</h2>
+            <p class="white" style="font-family: 'blocky_font', sans-serif; color: white; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+              Through an all-star line-up of marketers (see below), and a blend of traditional, guerrilla, and viral marketing tactics. We will announce our A few minutes after launch. We're so confident in EasyShill our success that we've launched without influencers.
+            </p>
+          </div>
+        </div>
+        
+        <!-- War zone battle sentence -->
+        <div class="battle-text" style="font-family: 'blocky_font', sans-serif; color: white; font-size: 32px; font-weight: bold; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255,255,255,0.6); text-align: center; margin: 40px 0;">
+          The space is a warzone, and we came to do battle. Stop fighting for scraps in the trenches; enlist with the best of the best and let's win the war.
+        </div>
+        
+        <!-- Who's behind EasyShill heading -->
+        <div class="team-heading" style="text-align: center; margin: 40px 0 20px;">
+          <h2 style="font-family: 'blocky_font', sans-serif; font-size: 42px; font-weight: bold; letter-spacing: 2px; margin: 0;">
+            <span class="green" style="color: #00ff7f; text-shadow: 0 0 15px rgba(0,255,127,0.8);">WHO'S BEHIND </span>
+            <span class="violet" style="color: #ee82ee; text-shadow: 0 0 15px rgba(238,130,238,0.8);">EASYSHILL?</span>
+          </h2>
+        </div>
+        
+        <!-- Team member section -->
+        <div class="team-members" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+          <!-- Team Member 1 - DragoR -->
+          <div class="team-member" style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
+            <img src="1.png" alt="DragoR" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
+            <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6);">DragoR</h3>
+            <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
+              Dragor is an OG marketing guru. He's had many names, but his work all carries a signature of excellence. Dragor led the infamous Chainlink–4chan campaign during Bull '21. It's considered one of the best grassroots campaigns ever launched.
+            </p>
+          </div>
+          
+          <!-- Team Member 2 - Boudica -->
+          <div class="team-member" style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
+            <img src="2.png" alt="Boudica" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
+            <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6);">Boudica</h3>
+            <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
+              Boudica's thrown up staggering numbers on everything he's touched, but his claim to fame is being the driving catalyst behind the Kitty Inu pump from $1.2m to $200m market cap.
+            </p>
+          </div>
+          
+          <!-- Team Member 3 - JourneyComes -->
+          <div class="team-member" style="flex: 1; min-width: 300px; max-width: 350px; padding: 20px; text-align: center;">
+            <img src="3.png" alt="JourneyComes" style="width: 200px; height: 200px; border-radius: 10px; margin-bottom: 15px;">
+            <h3 style="font-family: 'spacex', sans-serif; letter-spacing: 1px; color: #00ff7f; font-size: 28px; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,127,0.6);">JourneyComes</h3>
+            <p style="font-family: 'blocky_font', sans-serif; color: white; font-size: 16px; line-height: 1.5; text-align: center;">
+              JourneyComes has worked with Floyd Mayweather, Reese Witherspoon, and more, but before her star-studded journey came, her efforts helped cement $CULT as first mover for the '22–'23 Ryoshi craze.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- JavaScript for initializing and resizing image maps -->
+  <script>
+    // Initialize and resize image maps when document is ready
+    $(document).ready(function() {
+      $('map').imageMapResize();
+    });
+  </script>
+</body>
+</html>
