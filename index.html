@@ -14,6 +14,7 @@
     body { padding-bottom: 200px; }
     
     /* Top-right icon cluster */
+    /* Top Right Icon Cluster */
     .icon-cluster {
       position: fixed;
       top: 20px;
@@ -33,12 +34,13 @@
       border: 1px solid rgba(0, 255, 127, 0.5);
       border-radius: 50%;
       transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(0, 255, 127, 0.3);
+      box-shadow: 0 0 10px rgba(0, 255, 127, 0.3), 0 0 20px rgba(0, 255, 127, 0.1);
+      text-decoration: none;
     }
     
     .icon-cluster a:hover {
       transform: scale(1.1);
-      box-shadow: 0 0 15px rgba(0, 255, 127, 0.6);
+      box-shadow: 0 0 15px rgba(0, 255, 127, 0.6), 0 0 30px rgba(0, 255, 127, 0.3);
       background-color: rgba(0, 20, 10, 0.7);
     }
     
@@ -46,6 +48,57 @@
       width: 24px;
       height: 24px;
       filter: brightness(0) invert(1);
+    }
+    
+    /* Top Left Wallet Address */
+    .wallet-address {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      font-family: 'digital-7', monospace;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 255, 127, 0.5);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 127, 0.3), 0 0 20px rgba(0, 255, 127, 0.1);
+      display: flex;
+      align-items: center;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    
+    .wallet-address:hover {
+      background-color: rgba(0, 20, 10, 0.7);
+      box-shadow: 0 0 15px rgba(0, 255, 127, 0.6), 0 0 30px rgba(0, 255, 127, 0.3);
+    }
+    
+    .wallet-address .copy-icon {
+      margin-right: 8px;
+      font-size: 16px;
+    }
+    
+    .wallet-address .tooltip {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #00ff7f;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .wallet-address.copied .tooltip {
+      opacity: 1;
     }
     
     /* Master Rings Layer */
@@ -134,24 +187,31 @@
   </style>
 </head>
 <body>
+  <!-- Top Left Wallet Address -->
+  <div class="wallet-address" id="wallet-address" onclick="copyAddress()">
+    <span class="copy-icon">📋</span>
+    <span class="address">GmCBEUk6VfjS9jcbiAKr385jnXhxvdx7AJM7KGb4grNY</span>
+    <span class="tooltip">Copied!</span>
+  </div>
+
   <!-- Icon Cluster in Top-Right -->
   <div class="icon-cluster">
-    <a href="https://dexscreener.com" target="_blank" title="Dexscreener">
+    <a href="https://dexscreener.com/ethereum/GmCBEUk6VfjS9jcbiAKr385jnXhxvdx7AJM7KGb4grNY" target="_blank" title="Dexscreener">
       <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyLDJBMTAsMTAgMCAwLDAgMiwxMkExMCwxMCAwIDAsMCAxMiwyMkExMCwxMCAwIDAsMCAyMiwxMkExMCwxMCAwIDAsMCAxMiwyTTEyLDRBOCw4IDAgMCwxIDIwLDEyQTgsOCAwIDAsMSAxMiwyMEE4LDggMCAwLDEgNCwxMkE4LDggMCAwLDEgMTIsNE0xMiw2QTYsNiAwIDAsMCA2LDEyQTYsNiAwIDAsMCAxMiwxOEE2LDYgMCAwLDAgMTgsMTJBNiw2IDAgMCwwIDEyLDZNMTIsOEE0LDQgMCAwLDEgMTYsMTJBNCw0IDAgMCwxIDEyLDE2QTQsNCAwIDAsMSA4LDEyQTQsNCAwIDAsMSAxMiw4WiIgLz48L3N2Zz4=" alt="Dexscreener">
     </a>
-    <a href="https://twitter.com" target="_blank" title="Twitter">
-      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTIyLjQ2LDZDMjEuNjksNi4zNSAyMC44Niw2LjU4IDIwLDYuNjlDMjAuODgsNi4xNiAyMS41Niw1LjMyIDIxLjg4LDQuMzFDMjEuMDUsNC44MSAyMC4xMyw1LjE2IDE5LjE2LDUuMzZDMTguMzcsNC41IDE3LjI2LDQgMTYsNEMxMy42NSw0IDExLjczLDUuOTIgMTEuNzMsOC4yOUMxMS43Myw4LjYzIDExLjc3LDguOTYgMTEuODQsOS4yN0M4LjI4LDkuMDkgNS4xMSw3LjM4IDMsNC43OUMyLjYzLDUuNDIgMi40Miw2LjE2IDIuNDIsNi45NEMyLjQyLDguNDMgMy4xNyw5Ljc1IDQuMzMsMTAuNUMzLjYyLDEwLjUgMi45NiwxMC4zIDIuMzgsMTBDMi4zOCwxMCAyLjM4LDEwIDIuMzgsMTAuMDNDMi4zOCwxMi4xMSAzLjg2LDEzLjg1IDUuODIsMTQuMjRDNS40NiwxNC4zNCA1LjA4LDE0LjM5IDQuNjksMTQuMzlDNC40MiwxNC4zOSA0LjE1LDE0LjM2IDMuODksMTQuMzFDNC40MywxNiA2LDE3LjI2IDcuODksMTcuMjlDNi40MywxOC40NSA0LjU4LDE5LjEzIDIuNTYsMTkuMTNDMi4yMiwxOS4xMyAxLjg4LDE5LjExIDEuNTQsMTkuMDdDMy40NCwyMC4yOSA1LjcsMjEgOC4xMiwyMUMxNiwwLjAzIDIwLDIxIDIwLDIxQzIwLDIwLjIxIDIwLDIwLjE5IDIwLDIwQzIwLDIwIDIwLDE1IDE2LDBDMTcuMzMsMCAxOC41MiwxMi44OSAyMC4wNywxMy44NkMyMC44OCwxMy4xNSAyMS43NCwxMi4yOCAyMi40NiwxMS4yOUMyMS43NSwxMi4yNSAyMC44OCwxMy4xMyAyMC4wNywxMy44NkMxOCwxMi43IDE4LDEwIDE4LDEwIiBmaWxsPSIjMDAwIi8+PC9zdmc+" alt="Twitter">
-    </a>
-    <a href="https://t.me" target="_blank" title="Telegram">
+    <a href="https://t.me/EasyShillSOL" target="_blank" title="Telegram">
       <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTkuNzgsMTguNjVMMTAuMDYsMTQuNzJMMTcuNzUsOC41MkMxOC4wOCw4LjE5IDE3LjY3LDguMDQgMTcuMjIsOC4zMUw3LjM0LDEzLjk3TDMuNTQsMTIuODFDMi43LDEyLjU3IDIuNjYsMTEuOTUgMy43MSwxMS41M0wxOS4yOSw2LjdDMjAuMDksNi4zNyAyMC44OSw2Ljg5IDIwLjQ1LDdMMjAuNjIsMTIuNTNMMTcuNzUsMTYuMzlMMTMuOTEsMTguOTFMMTIuOTEsMTguNjVaIiBmaWxsPSIjMDAwIi8+PC9zdmc+" alt="Telegram">
     </a>
-    <a href="https://solscan.io" target="_blank" title="Solscan">
+    <a href="https://x.com/EasyShillSOL" target="_blank" title="X (Twitter)">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE4LjI0NCAxLjc1NHYyLjE4NmwtLjc3MyAyLjM5YzAgLjAwMS0yLjM2NC44Mjgtny3Mjk2Ljc1Mjl2LS4wMDFsLTcuNDAyIDkuMTY4di43Nzlsni4wMTcuMDA1aDIuMjV2LS4wMDVoNC41djQuMDEzaC00LjV2Ljc5M2g1LjI5MXY0LjAxM2gtMTUuMXYtNC4wMTNoNS4yNXYtLjc5M2gtNC41di00LjAxM2g0LjVsLjAwMS0uMDA0aDIuMjY0bDIuNjQ1LTguMDIxLTUuNjk3IDMuNTN2LjAwMWwtMi43MyA0LjQyOXYuMDFoLTYuNDU4di00LjAxMmg0LjE2M2wuMDA0LS4wMDUgNi43NzktMTAuOTdsLTMuNjM5IDEuNTNzLTEuNTE2LTEuNTQzLTEuNTE2LTEuM4OXYtLjAwOGwxLjY0LTIuNzloMi42MTVhMi44NyAyLjg3IDAgMCAxIDIuODczIDIuODY5IiAvPjwvc3ZnPg==" alt="X (Twitter)">
+    </a>
+    <a href="https://solscan.io/GmCBEUk6VfjS9jcbiAKr385jnXhxvdx7AJM7KGb4grNY" target="_blank" title="Solscan">
       <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyLDFMMSw1VjExQzEsMTYuNTUgNS44NCwyMS43NCAxMiwyM0MxOC4xNiwyMS43NCAyMywxNi41NSAyMywxMVY1TDEyLDFNMTIsNUMyLDYgMywyMiAzLDIyQzMsMjIgMTAsMjEgMTIsMjFDMTQsMjEgMjEsMjIgMjEsMjJDMjEsMjIgMjIsNiAxMiw1TTEyLDdDMTYuNDgsNyAxNy44NywxNCAxNy44NywxNEgxNS4yQzE1LjIsMTQgMTQuMjUsMTAgMTIsMTBDOS43NSwxMCA4LjgsMTQgOC44LDE0SDYuMTNDNi4xMywxNCAxLjUyLDcgMTIsN00xMiwxMkMxMy4zMywxMiAxNCwxMy42NyAxNCwxMy42N0gxMFYxNS4zM0gxNEMxNCwxNS4zMyAxMy4zMywxNyAxMiwxN0MxMC42NywxNyAxMCwxNS4zMyAxMCwxNS4zM0g4QzgsMTUuMzMgOS4zMywxOSAxMiwxOUMxNC42NywxOSAxNiwxNS4zMyAxNiwxNS4zM1YxMy42N0MxNiwxMy42NyAxNC42NywxMCAxMiwxMFY2IiBmaWxsPSIjMDAwIi8+PC9zdmc+" alt="Solscan">
     </a>
   </div>
 
   <!-- 3D Moon Container using Three.js -->
-  <div id="moon-3d-container" style="z-index: 5; position: absolute; pointer-events: none; top: 0; left: 0; width: 100%; height: 100vh;"></div>
+  <div id="moon-3d-container" style="z-index: 1; position: fixed; pointer-events: none; top: 0; left: 0; width: 100%; height: 100%;"></div>
   
   <!-- Master Rings Layer - Only keep the top single set as shown in mockup.png -->
   <div class="master-rings-layer">
@@ -869,24 +929,166 @@
   </script>
   
   <!-- Marketing Schedule Section -->
-  <section style="position: relative; z-index: 20; width: 100%; background-color: rgba(0,0,0,0.7); margin-top: 50px; padding: 30px 0; border-top: 1px solid rgba(0,255,127,0.3); box-shadow: 0 -5px 15px rgba(0,0,0,0.5);">
-    <div style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
-      <h2 style="font-family: 'digital-7', monospace; text-align: center; color: #00ff7f; font-size: 36px; margin-bottom: 30px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,255,127,0.8);">MARKETING SCHEDULE</h2>
+  <section style="position: relative; z-index: 20; width: 100%; background-color: #000; margin-top: 50px; padding: 30px 0; border-top: 1px solid rgba(0,255,127,0.3); box-shadow: 0 -5px 15px rgba(0,0,0,0.5);">
+    <div style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
+      <h2 style="font-family: 'digital-7', monospace; text-align: center; color: #00ff7f; font-size: 36px; margin-bottom: 20px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,255,127,0.8);">MARKETING SCHEDULE – MAY 2025</h2>
       
-      <div style="display: flex; margin-bottom: 15px; align-items: center;">
-        <div style="width: 150px; font-family: 'blocky_font', sans-serif; color: #fff; font-size: 18px; font-weight: bold; text-shadow: 0 0 5px rgba(255,255,255,0.5);">April 30</div>
-        <div style="height: 1px; flex-grow: 0; width: 30px; background: linear-gradient(to right, rgba(0,255,127,0), rgba(0,255,127,1))"></div>
-        <div style="flex-grow: 1; font-family: 'blocky_font', sans-serif; color: #fff; font-size: 18px; padding-left: 20px;">Billboards Across All 50 States</div>
+      <!-- Calendar Grid Container -->
+      <div style="border: 2px solid rgba(0,255,127,0.5); border-radius: 10px; padding: 15px; background-color: rgba(10,10,15,0.8); box-shadow: 0 0 20px rgba(0,255,127,0.2), inset 0 0 30px rgba(0,0,0,0.8); margin-bottom: 30px;">
+        
+        <!-- Day of Week Headers -->
+        <div style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; margin-bottom: 15px; border-bottom: 1px solid rgba(0,255,127,0.3); padding-bottom: 10px;">
+          <div style="font-family: 'digital-7', monospace; color: #ff5555; font-size: 18px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,85,85,0.5);">SUN</div>
+          <div style="font-family: 'digital-7', monospace; color: #ffffff; font-size: 18px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,255,255,0.5);">MON</div>
+          <div style="font-family: 'digital-7', monospace; color: #ffffff; font-size: 18px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,255,255,0.5);">TUE</div>
+          <div style="font-family: 'digital-7', monospace; color: #ffffff; font-size: 18px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,255,255,0.5);">WED</div>
+          <div style="font-family: 'digital-7', monospace; color: #ffffff; font-size: 18px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,255,255,0.5);">THU</div>
+          <div style="font-family: 'digital-7', monospace; color: #ffffff; font-size: 18px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,255,255,0.5);">FRI</div>
+          <div style="font-family: 'digital-7', monospace; color: #00ff7f; font-size: 18px; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0,255,127,0.5);">SAT</div>
+        </div>
+        
+        <!-- Calendar Grid -->
+        <div style="display: grid; grid-template-columns: repeat(7, 1fr); grid-gap: 8px;">
+          <!-- First row - April 27-30, May 1-3 -->
+          <!-- April dates -->
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(30,30,30,0.5); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #777; font-size: 16px; text-align: right;">27</div>
+            <div style="font-family: 'blocky_font', sans-serif; color: #777; font-size: 12px; margin-top: auto; text-align: center; opacity: 0.7;">Apr</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(30,30,30,0.5); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #777; font-size: 16px; text-align: right;">28</div>
+            <div style="font-family: 'blocky_font', sans-serif; color: #777; font-size: 12px; margin-top: auto; text-align: center; opacity: 0.7;">Apr</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(30,30,30,0.5); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #777; font-size: 16px; text-align: right;">29</div>
+            <div style="font-family: 'blocky_font', sans-serif; color: #777; font-size: 12px; margin-top: auto; text-align: center; opacity: 0.7;">Apr</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(30,30,30,0.5); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #777; font-size: 16px; text-align: right;">30</div>
+            <div style="font-family: 'blocky_font', sans-serif; color: #777; font-size: 12px; margin-top: auto; text-align: center; opacity: 0.7;">Apr</div>
+          </div>
+          
+          <!-- May dates -->
+          <!-- May 1 - Special Event -->
+          <div style="height: 90px; border: 2px solid #00ff7f; border-radius: 5px; padding: 5px; background: linear-gradient(135deg, rgba(0,20,10,0.8), rgba(0,40,20,0.5)); box-shadow: 0 0 10px rgba(0,255,127,0.6), inset 0 0 20px rgba(0,50,25,0.5); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #fff; font-size: 16px; text-align: right; text-shadow: 0 0 5px rgba(255,255,255,0.8);">1</div>
+            <div style="font-family: 'blocky_font', sans-serif; color: #00ff7f; font-size: 11px; text-align: center; margin-top: 5px; text-shadow: 0 0 5px rgba(0,255,127,0.8);">Flyover over Token2049 with QR code</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">2</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">3</div>
+          </div>
+          
+          <!-- Second row - May 4-10 -->
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">4</div>
+          </div>
+          
+          <!-- May 5 - Special Event -->
+          <div style="height: 90px; border: 2px solid #00ff7f; border-radius: 5px; padding: 5px; background: linear-gradient(135deg, rgba(0,20,10,0.8), rgba(0,40,20,0.5)); box-shadow: 0 0 10px rgba(0,255,127,0.6), inset 0 0 20px rgba(0,50,25,0.5); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #fff; font-size: 16px; text-align: right; text-shadow: 0 0 5px rgba(255,255,255,0.8);">5</div>
+            <div style="font-family: 'blocky_font', sans-serif; color: #00ff7f; font-size: 11px; text-align: center; margin-top: 5px; text-shadow: 0 0 5px rgba(0,255,127,0.8);">Flash Mob @ Televised Event</div>
+          </div>
+          
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">6</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">7</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">8</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">9</div>
+          </div>
+          
+          <!-- May 10 - Special Event -->
+          <div style="height: 90px; border: 2px solid #00ff7f; border-radius: 5px; padding: 5px; background: linear-gradient(135deg, rgba(0,20,10,0.8), rgba(0,40,20,0.5)); box-shadow: 0 0 10px rgba(0,255,127,0.6), inset 0 0 20px rgba(0,50,25,0.5); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #fff; font-size: 16px; text-align: right; text-shadow: 0 0 5px rgba(255,255,255,0.8);">10</div>
+            <div style="font-family: 'blocky_font', sans-serif; color: #00ff7f; font-size: 11px; text-align: center; margin-top: 5px; text-shadow: 0 0 5px rgba(0,255,127,0.8);">Public WiFi Sponsorship (Landing Page)</div>
+          </div>
+          
+          <!-- Third row - May 11-17 -->
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">11</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">12</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">13</div>
+          </div>
+          
+          <!-- May 14 - Special Event -->
+          <div style="height: 90px; border: 2px solid #00ff7f; border-radius: 5px; padding: 5px; background: linear-gradient(135deg, rgba(0,20,10,0.8), rgba(0,40,20,0.5)); box-shadow: 0 0 10px rgba(0,255,127,0.6), inset 0 0 20px rgba(0,50,25,0.5); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #fff; font-size: 16px; text-align: right; text-shadow: 0 0 5px rgba(255,255,255,0.8);">14</div>
+            <div style="font-family: 'blocky_font', sans-serif; color: #00ff7f; font-size: 11px; text-align: center; margin-top: 5px; text-shadow: 0 0 5px rgba(0,255,127,0.8);">Guinness World Record Attempt</div>
+          </div>
+          
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">15</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">16</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">17</div>
+          </div>
+          
+          <!-- Fourth row - May 18-24 -->
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">18</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">19</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">20</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">21</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">22</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">23</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">24</div>
+          </div>
+          
+          <!-- Fifth row - May 25-31 -->
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">25</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">26</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">27</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">28</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">29</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">30</div>
+          </div>
+          <div style="height: 90px; border: 1px solid rgba(100,100,100,0.3); border-radius: 5px; padding: 5px; background-color: rgba(20,20,25,0.6); display: flex; flex-direction: column;">
+            <div style="font-family: 'blocky_font', sans-serif; color: #ccc; font-size: 16px; text-align: right;">31</div>
+          </div>
+        </div>
       </div>
       
-      <div style="display: flex; margin-bottom: 15px; align-items: center;">
-        <div style="width: 150px; font-family: 'blocky_font', sans-serif; color: #fff; font-size: 18px; font-weight: bold; text-shadow: 0 0 5px rgba(255,255,255,0.5);">May 1</div>
-        <div style="height: 1px; flex-grow: 0; width: 30px; background: linear-gradient(to right, rgba(0,255,127,0), rgba(0,255,127,1))"></div>
-        <div style="flex-grow: 1; font-family: 'blocky_font', sans-serif; color: #fff; font-size: 18px; padding-left: 20px;">Flyover at Token2049 – Dubai</div>
-      </div>
-      
-      <div style="text-align: center; margin-top: 30px; font-family: 'digital-7', monospace; color: #ff5555; font-size: 24px; letter-spacing: 3px; text-shadow: 0 0 10px rgba(255,0,0,0.5);">
-        COMING SOON
+      <!-- Coming Soon Text -->
+      <div style="text-align: center; margin-top: 20px; font-family: 'digital-7', monospace; color: #ff5555; font-size: 24px; letter-spacing: 3px; text-shadow: 0 0 10px rgba(255,0,0,0.5);">
+        MORE EVENTS TBA
       </div>
     </div>
     
@@ -895,5 +1097,73 @@
       © EasyShill. All Rights Reserved.
     </div>
   </section>
+  
+  <!-- JavaScript for Click-to-Copy Wallet Address -->
+  <script>
+    function copyAddress() {
+      const addressEl = document.querySelector('#wallet-address .address');
+      const walletEl = document.getElementById('wallet-address');
+      const address = addressEl.textContent;
+      
+      // Create a temporary input element
+      const tempInput = document.createElement('input');
+      tempInput.value = address;
+      document.body.appendChild(tempInput);
+      
+      // Select and copy the text
+      tempInput.select();
+      document.execCommand('copy');
+      
+      // Remove the temporary element
+      document.body.removeChild(tempInput);
+      
+      // Visual feedback
+      walletEl.classList.add('copied');
+      
+      // Remove the 'copied' class after 2 seconds
+      setTimeout(() => {
+        walletEl.classList.remove('copied');
+      }, 2000);
+    }
+    
+    // Fix for X (Twitter) icon which had invalid SVG data
+    document.addEventListener('DOMContentLoaded', function() {
+      const xTwitterIcon = document.querySelector('a[href*="x.com"] img');
+      if (xTwitterIcon) {
+        xTwitterIcon.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTIxLjUzLDcuMTVDMjEuNTMsNy4xNSAyMy4yOSw1LjU5IDIzLjMsNC41QzIzLjMsMy4zOCAyMS43MiwzLjY1IDIxLjcyLDMuNjVMMTguNDksNC44MkwxOC4zMyw0Ljg4QzE4LjMzLDQuODggMTUuNjUsMi4xMSAxMC42MSwzLjE2QzUuNTcsNC4yMSA0LjY4LDggNC42OCw4QzQuNjgsOCAyLjg3LDguMiAyLjE5LDguODVDMS41MSw5LjUgMi4zNywxMS4zIDIuMzcsMTEuM0wzLjY5LDEyLjkxTDMuNDYsMTMuMDlDMy40NiwxMy4wOSAyLjMyLDEyLjY4IDIuMzIsMTMuNTdDMi4zMiwxNC40NiAzLjg5LDE3LjAyIDcuMzEsMTcuMDJDMTAuNzMsMTcuMDIgMTIuMiwxNC44NiAxMi4yLDE0Ljg2TDEyLjI1LDE1LjQ5TDE0LjYzLDQuODhWNC44OEwxNC4yOSwxNS41OUMxNC4yOSwxNS41OSAxNC4xNiwxOC4xIDEyLjM1LDE4LjFDMTAuNTQsMTguMSAxMC4zNiwxNi4yNCAxMC4zNiwxNi4yNEwxMC4yOCwxNi4yTDcuODgsMTYuOTRMNy44NiwxNi45NUM3Ljg2LDE2Ljk1IDcuNTMsMTkuOTIgMTAuNiwyMC41N0MxMy42NywyMS4yMiAxNy41MywxOC4wNyAxNy41MywxOC4wN0wxOS44MywxNi41OUwxOC41NywyMC4xNUMxOC41NywyMC4xNSAxOC4zNCwyMS4xOSAxOS40NiwyMS4xOUMyMC41OCwyMS4xOSAyMi4wNCwxOSAyMi4wNCwxOUwyMywxNy4zVjE3LjNDMjMsMTcuMyAyMy4zNSwxNi43NyAyMi4xNywxNi40MkMyMC45OSwxNi4wNiAxOC41LDE3Ljc1IDE4LjUsMTcuNzVMMTYuNzQsMTguOTlMMTYuNzUsMTguOThDMTYuNzUsMTguOTggMTkuMjEsMTYuODkgMjAuMSwxNi4xNUMyMC45OSwxNS40MSAyMS41MSwxNC4zMiAyMS41MywxNC4zTDE5LjQsMTYuMyIgLz48L3N2Zz4=";
+      }
+    });
+  </script>
+  
+  <!-- Three.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- Custom Moon and Background Scripts -->
+  <script src="js/moon-threejs.js"></script>
+  <script src="js/improved-moon.js"></script>
+  <script src="js/moon-integration.js"></script>
+  <script src="background.js"></script>
+  
+  <!-- Initialize Three.js Background -->
+  <script>
+    // Make the background.js script use the existing container instead of creating its own
+    window.useExistingContainer = true;
+    window.existingContainerId = 'moon-3d-container';
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const moonContainer = document.getElementById('moon-3d-container');
+      
+      // Ensure z-index is correct and container is properly set up
+      if (moonContainer) {
+        moonContainer.style.zIndex = '1';
+        moonContainer.style.position = 'fixed';
+        moonContainer.style.pointerEvents = 'none';
+        moonContainer.style.top = '0';
+        moonContainer.style.left = '0';
+        moonContainer.style.width = '100%';
+        moonContainer.style.height = '100%';
+      }
+    });
+  </script>
 </body>
 </html>

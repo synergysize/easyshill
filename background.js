@@ -12,13 +12,29 @@
         animate();
 
         function init() {
-                container = document.createElement('div');
+                // Check if we should use an existing container
+                if (window.useExistingContainer && window.existingContainerId) {
+                    container = document.getElementById(window.existingContainerId);
+                    if (!container) {
+                        console.error('Specified container not found, creating a new one');
+                        createNewContainer();
+                    }
+                } else {
+                    createNewContainer();
+                }
+                
+                // Ensure container has correct styles
                 container.style.position = 'fixed';
                 container.style.top = '0';
                 container.style.left = '0';
                 container.style.width = '100%';
                 container.style.height = '100%';
                 container.style.zIndex = '1'; // Set a low z-index to ensure it's behind other content
+                container.style.pointerEvents = 'none'; // Don't block mouse events
+        }
+        
+        function createNewContainer() {
+                container = document.createElement('div');
                 document.body.appendChild(container);
                 document.body.style.overflow = 'hidden';
 
